@@ -408,14 +408,14 @@ class MlbStatsClient:
     @staticmethod
     def fetch_active_roster(team_id: int = None, team_name: str = None, year: int = 2024):
         """Return the active roster for a team in a given ``year``.
-            https://statsapi.mlb.com/api/v1/teams/116/roster?season=2025&rosterType=active
+            https://statsapi.mlb.com/api/v1/teams/116/roster?season=2025&rosterType=active&hydrate=person
         """
         if not team_id:
             team_id = MlbStatsClient.get_team_id(team_name)
 
         url = (
             f"{STATS_API_BASE_URL}teams/{team_id}/roster"
-            f"?season={year}&rosterType=active"
+            f"?season={year}&rosterType=active&hydrate=person"
         )
         data = MlbStatsClient._get_json(url)
         return data["roster"]
