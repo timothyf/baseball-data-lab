@@ -489,6 +489,7 @@ class MlbStatsClient:
         """Return the team record for a given season."""
         url = f"{STATS_API_BASE_URL}teams/?teamId={team_id}&season={season}&hydrate=standings"
         data = MlbStatsClient._get_json(url)
+        data["teams"][0]["record"]["teamName"] = data["teams"][0]["name"]
         return data["teams"][0]["record"]
     
     # https://statsapi.mlb.com/api/v1/schedule?sportId=1&startDate=2025-08-16&endDate=2025-08-18
