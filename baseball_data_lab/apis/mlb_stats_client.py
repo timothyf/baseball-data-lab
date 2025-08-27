@@ -519,7 +519,16 @@ class MlbStatsClient:
         url = f"{SAVANT_BASE_URL}gf?game_pk={game_pk}"
         data = MlbStatsClient._get_json(url)
         return data
-    
+
+    @staticmethod
+    def get_game_live_feed(game_pk: int) -> pd.DataFrame:
+        """Return the live feed data for a given game ID.
+            https://ws.statsapi.mlb.com/api/v1.1/game/776573/feed/live?language=en
+        """
+        url = f"https://ws.statsapi.mlb.com/api/v1.1/game/{game_pk}/feed/live?language=en"
+        data = MlbStatsClient._get_json(url)
+        return data
+
     @staticmethod
     def get_game_boxscore_data(game_pk: int) -> pd.DataFrame:
         """Return the game boxscore data for a given game ID.

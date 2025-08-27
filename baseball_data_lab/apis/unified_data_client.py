@@ -150,7 +150,10 @@ class UnifiedDataClient:
 
     def get_game_data(self, game_pk: int) -> pd.DataFrame:
         return MlbStatsClient.get_game_data(game_pk)
-    
+
+    def get_game_live_feed(self, game_pk: int) -> pd.DataFrame:
+        return MlbStatsClient.get_game_live_feed(game_pk)
+
     def get_recent_schedule_for_team(self, team_id: int) -> pd.DataFrame:
         return MlbStatsClient.get_recent_schedule_for_team(team_id)
 
