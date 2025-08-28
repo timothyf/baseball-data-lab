@@ -8,7 +8,7 @@ import requests
 import statsapi
 from requests.adapters import HTTPAdapter, Retry
 
-from baseball_data_lab.config import STATS_API_BASE_URL, SAVANT_BASE_URL
+from baseball_data_lab.config import STATS_API_BASE_URL, SAVANT_BASE_URL, MLB_INFRA_BASE_URL
 from datetime import date
 
 
@@ -538,6 +538,15 @@ class MlbStatsClient:
         data = MlbStatsClient._get_json(url)
         return data
     
+    @staticmethod
+    def get_leaderboard_data(season: int, group: str, stat_type: str, limit: int, offset: int) -> pd.DataFrame:
+        """Return the leaderboard data for a given season and stat type.
+            https://bdfed.stitch.mlbinfra.com/bdfed/stats/player?&env=prod&season=2025&stats=season&group=hitting&gameType=R&limit=50&offset=0&sortStat=homeRuns&order=desc
+        """
+        url = f"{MLB_INFRA_BASE_URL}stats/player?&env=prod&season={season}&stats=season&group={group}&gameType=R&limit={limit}&offset={offset}&sortStat={stat_type}&order=desc"
+        data = MlbStatsClient._get_json(url)
+        return data
+
     @staticmethod
     def get_team_stats_for_date_range(team_id: int, start_date: str, end_date: str) -> pd.DataFrame:
         """Fetch the team stats for a specific date range.
