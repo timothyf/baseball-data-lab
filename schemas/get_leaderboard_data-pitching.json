@@ -1,0 +1,487 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "totalSplits": {
+      "type": "integer"
+    },
+    "playerPool": {
+      "type": "string"
+    },
+    "stats": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "year": {
+            "type": "string"
+          },
+          "playerId": {
+            "type": "integer"
+          },
+          "playerName": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "rank": {
+            "type": "integer"
+          },
+          "playerFullName": {
+            "type": "string"
+          },
+          "playerFirstName": {
+            "type": "string"
+          },
+          "playerLastName": {
+            "type": "string"
+          },
+          "playerUseName": {
+            "type": "string"
+          },
+          "playerInitLastName": {
+            "type": "string"
+          },
+          "teamId": {
+            "type": "integer"
+          },
+          "teamAbbrev": {
+            "type": "string"
+          },
+          "teamName": {
+            "type": "string"
+          },
+          "teamShortName": {
+            "type": "string"
+          },
+          "leagueName": {
+            "type": "string"
+          },
+          "leagueId": {
+            "type": "integer"
+          },
+          "positionAbbrev": {
+            "type": "string"
+          },
+          "position": {
+            "type": "string"
+          },
+          "primaryPositionAbbrev": {
+            "type": "string"
+          },
+          "age": {
+            "type": "integer"
+          },
+          "winningPercentage": {
+            "type": "string"
+          },
+          "runsScoredPer9": {
+            "type": "string"
+          },
+          "battersFaced": {
+            "type": "integer"
+          },
+          "babip": {
+            "type": "string"
+          },
+          "obp": {
+            "type": "string"
+          },
+          "slg": {
+            "type": "string"
+          },
+          "ops": {
+            "type": "string"
+          },
+          "strikeoutsPer9": {
+            "type": "string"
+          },
+          "baseOnBallsPer9": {
+            "type": "string"
+          },
+          "homeRunsPer9": {
+            "type": "string"
+          },
+          "hitsPer9": {
+            "type": "string"
+          },
+          "strikesoutsToWalks": {
+            "type": "string"
+          },
+          "inheritedRunners": {
+            "type": "integer"
+          },
+          "inheritedRunnersScored": {
+            "type": "integer"
+          },
+          "bequeathedRunners": {
+            "type": "integer"
+          },
+          "bequeathedRunnersScored": {
+            "type": "integer"
+          },
+          "stolenBases": {
+            "type": "integer"
+          },
+          "caughtStealing": {
+            "type": "integer"
+          },
+          "qualityStarts": {
+            "type": "integer"
+          },
+          "gamesFinished": {
+            "type": "integer"
+          },
+          "doubles": {
+            "type": "integer"
+          },
+          "triples": {
+            "type": "integer"
+          },
+          "gidp": {
+            "type": "integer"
+          },
+          "gidpOpp": {
+            "type": "integer"
+          },
+          "wildPitches": {
+            "type": "integer"
+          },
+          "balks": {
+            "type": "integer"
+          },
+          "pickoffs": {
+            "type": "integer"
+          },
+          "totalSwings": {
+            "type": "integer"
+          },
+          "swingAndMisses": {
+            "type": "integer"
+          },
+          "strikeoutsMinusWalksPercentage": {
+            "type": "string"
+          },
+          "gidpPercentage": {
+            "type": "string"
+          },
+          "battersFacedPerGame": {
+            "type": "string"
+          },
+          "buntsFailed": {
+            "type": "integer"
+          },
+          "buntsMissedTipped": {
+            "type": "integer"
+          },
+          "whiffPercentage": {
+            "type": "string"
+          },
+          "ballsInPlay": {
+            "type": "integer"
+          },
+          "runSupport": {
+            "type": "integer"
+          },
+          "strikePercentage": {
+            "type": "string"
+          },
+          "pitchesPerInning": {
+            "type": "string"
+          },
+          "pitchesPerPlateAppearance": {
+            "type": "string"
+          },
+          "walksPerPlateAppearance": {
+            "type": "string"
+          },
+          "strikeoutsPerPlateAppearance": {
+            "type": "string"
+          },
+          "homeRunsPerPlateAppearance": {
+            "type": "string"
+          },
+          "walksPerStrikeout": {
+            "type": "string"
+          },
+          "iso": {
+            "type": "string"
+          },
+          "flyOuts": {
+            "type": "integer"
+          },
+          "popOuts": {
+            "type": "integer"
+          },
+          "lineOuts": {
+            "type": "integer"
+          },
+          "groundOuts": {
+            "type": "integer"
+          },
+          "flyHits": {
+            "type": "integer"
+          },
+          "popHits": {
+            "type": "integer"
+          },
+          "lineHits": {
+            "type": "integer"
+          },
+          "groundHits": {
+            "type": "integer"
+          },
+          "gamesPlayed": {
+            "type": "integer"
+          },
+          "gamesStarted": {
+            "type": "integer"
+          },
+          "airOuts": {
+            "type": "integer"
+          },
+          "runs": {
+            "type": "integer"
+          },
+          "homeRuns": {
+            "type": "integer"
+          },
+          "strikeOuts": {
+            "type": "integer"
+          },
+          "baseOnBalls": {
+            "type": "integer"
+          },
+          "intentionalWalks": {
+            "type": "integer"
+          },
+          "hits": {
+            "type": "integer"
+          },
+          "hitByPitch": {
+            "type": "integer"
+          },
+          "avg": {
+            "type": "string"
+          },
+          "atBats": {
+            "type": "integer"
+          },
+          "stolenBasePercentage": {
+            "type": "string"
+          },
+          "caughtStealingPercentage": {
+            "type": "string"
+          },
+          "groundIntoDoublePlay": {
+            "type": "integer"
+          },
+          "numberOfPitches": {
+            "type": "integer"
+          },
+          "era": {
+            "type": "string"
+          },
+          "inningsPitched": {
+            "type": "string"
+          },
+          "wins": {
+            "type": "integer"
+          },
+          "losses": {
+            "type": "integer"
+          },
+          "saves": {
+            "type": "integer"
+          },
+          "saveOpportunities": {
+            "type": "integer"
+          },
+          "holds": {
+            "type": "integer"
+          },
+          "blownSaves": {
+            "type": "integer"
+          },
+          "earnedRuns": {
+            "type": "integer"
+          },
+          "whip": {
+            "type": "string"
+          },
+          "outs": {
+            "type": "integer"
+          },
+          "gamesPitched": {
+            "type": "integer"
+          },
+          "completeGames": {
+            "type": "integer"
+          },
+          "shutouts": {
+            "type": "integer"
+          },
+          "strikes": {
+            "type": "integer"
+          },
+          "hitBatsmen": {
+            "type": "integer"
+          },
+          "totalBases": {
+            "type": "integer"
+          },
+          "groundOutsToAirouts": {
+            "type": "string"
+          },
+          "winPercentage": {
+            "type": "string"
+          },
+          "strikeoutWalkRatio": {
+            "type": "string"
+          },
+          "strikeoutsPer9Inn": {
+            "type": "string"
+          },
+          "walksPer9Inn": {
+            "type": "string"
+          },
+          "hitsPer9Inn": {
+            "type": "string"
+          },
+          "catchersInterference": {
+            "type": "integer"
+          },
+          "sacBunts": {
+            "type": "integer"
+          },
+          "sacFlies": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "age",
+          "airOuts",
+          "atBats",
+          "avg",
+          "babip",
+          "balks",
+          "ballsInPlay",
+          "baseOnBalls",
+          "baseOnBallsPer9",
+          "battersFaced",
+          "battersFacedPerGame",
+          "bequeathedRunners",
+          "bequeathedRunnersScored",
+          "blownSaves",
+          "buntsFailed",
+          "buntsMissedTipped",
+          "catchersInterference",
+          "caughtStealing",
+          "caughtStealingPercentage",
+          "completeGames",
+          "doubles",
+          "earnedRuns",
+          "era",
+          "flyHits",
+          "flyOuts",
+          "gamesFinished",
+          "gamesPitched",
+          "gamesPlayed",
+          "gamesStarted",
+          "gidp",
+          "gidpOpp",
+          "gidpPercentage",
+          "groundHits",
+          "groundIntoDoublePlay",
+          "groundOuts",
+          "groundOutsToAirouts",
+          "hitBatsmen",
+          "hitByPitch",
+          "hits",
+          "hitsPer9",
+          "hitsPer9Inn",
+          "holds",
+          "homeRuns",
+          "homeRunsPer9",
+          "homeRunsPerPlateAppearance",
+          "inheritedRunners",
+          "inheritedRunnersScored",
+          "inningsPitched",
+          "intentionalWalks",
+          "iso",
+          "leagueId",
+          "leagueName",
+          "lineHits",
+          "lineOuts",
+          "losses",
+          "numberOfPitches",
+          "obp",
+          "ops",
+          "outs",
+          "pickoffs",
+          "pitchesPerInning",
+          "pitchesPerPlateAppearance",
+          "playerFirstName",
+          "playerFullName",
+          "playerId",
+          "playerInitLastName",
+          "playerLastName",
+          "playerName",
+          "playerUseName",
+          "popHits",
+          "popOuts",
+          "position",
+          "positionAbbrev",
+          "primaryPositionAbbrev",
+          "qualityStarts",
+          "rank",
+          "runSupport",
+          "runs",
+          "runsScoredPer9",
+          "sacBunts",
+          "sacFlies",
+          "saveOpportunities",
+          "saves",
+          "shutouts",
+          "slg",
+          "stolenBasePercentage",
+          "stolenBases",
+          "strikeOuts",
+          "strikePercentage",
+          "strikeoutWalkRatio",
+          "strikeoutsMinusWalksPercentage",
+          "strikeoutsPer9",
+          "strikeoutsPer9Inn",
+          "strikeoutsPerPlateAppearance",
+          "strikes",
+          "strikesoutsToWalks",
+          "swingAndMisses",
+          "teamAbbrev",
+          "teamId",
+          "teamName",
+          "teamShortName",
+          "totalBases",
+          "totalSwings",
+          "triples",
+          "type",
+          "walksPer9Inn",
+          "walksPerPlateAppearance",
+          "walksPerStrikeout",
+          "whiffPercentage",
+          "whip",
+          "wildPitches",
+          "winPercentage",
+          "winningPercentage",
+          "wins",
+          "year"
+        ]
+      }
+    }
+  },
+  "required": [
+    "playerPool",
+    "stats",
+    "totalSplits"
+  ]
+}

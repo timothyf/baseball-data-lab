@@ -541,8 +541,13 @@ class MlbStatsClient:
     @staticmethod
     def get_leaderboard_data(season: int, group: str, stat_type: str, limit: int, offset: int, sort_order: str) -> pd.DataFrame:
         """Return the leaderboard data for a given season and stat type.
+            Batting:
             https://bdfed.stitch.mlbinfra.com/bdfed/stats/player?&env=prod&season=2025&stats=season&group=hitting&gameType=R&limit=50&offset=0&sortStat=homeRuns&order=desc
-        """
+            Pitching:
+            https://bdfed.stitch.mlbinfra.com/bdfed/stats/player?&env=prod&season=2025&stats=season&group=pitching&gameType=R&limit=50&offset=0&sortStat=strikeOuts&order=desc
+            Fielding:
+            https://bdfed.stitch.mlbinfra.com/bdfed/stats/player?&env=prod&season=2025&stats=season&group=fielding&gameType=R&limit=50&offset=0&sortStat=fielding&order=desc
+         """
         url = f"{MLB_INFRA_BASE_URL}stats/player?&env=prod&season={season}&stats=season&group={group}&gameType=R&limit={limit}&offset={offset}&sortStat={stat_type}&order={sort_order}"
         data = MlbStatsClient._get_json(url)
         return data
