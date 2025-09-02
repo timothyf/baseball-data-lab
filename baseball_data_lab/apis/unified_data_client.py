@@ -126,6 +126,9 @@ class UnifiedDataClient:
         return MlbStatsClient.get_player_teams_for_season(
             player_id, year, group=group, ids_only=ids_only
         )
+    
+    def get_player_gamelog(self, player_id: int, stat_type: str, season: int):
+        return MlbStatsClient.get_player_gamelog(player_id, stat_type, season)
 
     def fetch_player_team(self, player_id: int, year: int):
         return MlbStatsClient.fetch_player_team(player_id, year)
