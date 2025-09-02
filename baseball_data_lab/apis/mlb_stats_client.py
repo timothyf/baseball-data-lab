@@ -2,11 +2,16 @@
 
 from typing import Any, Dict, List, Optional, Literal
 from urllib.parse import urlencode
+import logging
+
 
 import pandas as pd
 import requests
 import statsapi
 from requests.adapters import HTTPAdapter, Retry
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 from baseball_data_lab.config import STATS_API_BASE_URL, SAVANT_BASE_URL, MLB_INFRA_BASE_URL
 from datetime import date
@@ -27,6 +32,7 @@ class MlbStatsClient:
     @staticmethod
     def _process_splits(data: List[Dict[str, Any]]) -> pd.DataFrame:
         """Reformat split data into a ``pandas`` ``DataFrame``."""
+        logger.info("Processing splits...")
         stat_rows: List[Dict[str, Any]] = []
         split_names: List[str] = []
         for entry in data:
@@ -106,12 +112,14 @@ class MlbStatsClient:
         lookup sitCodes here
           https://statsapi.mlb.com/api/v1/situationCodes         
         """
+        logger.info("Fetching batter stat splits...")
         url = (
             f"{STATS_API_BASE_URL}people?personIds={player_id}"
             f"&hydrate=stats(group=[hitting],type=statSplits,sitCodes=[vr,vl,h,a],season={year})"
         )
         data = MlbStatsClient._get_json(url)
-        return MlbStatsClient._process_splits(data["people"][0]["stats"][0]["splits"])
+        return data
+        #return MlbStatsClient._process_splits(data["people"][0]["stats"][0]["splits"])
 
     @staticmethod
     def fetch_pitcher_stat_splits(player_id: int, year: int):
@@ -124,7 +132,8 @@ class MlbStatsClient:
             f"&hydrate=stats(group=[pitching],type=statSplits,sitCodes=[vr,vl],season={year})"
         )
         data = MlbStatsClient._get_json(url)
-        return MlbStatsClient._process_splits(data["people"][0]["stats"][0]["splits"])
+        return data
+        #return MlbStatsClient._process_splits(data["people"][0]["stats"][0]["splits"])
 
     # @staticmethod
     # def fetch_player_stats(player_id: int, year: int):
