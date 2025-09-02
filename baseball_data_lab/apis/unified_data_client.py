@@ -85,10 +85,10 @@ class UnifiedDataClient:
     #############################
     # MlbStatsClient wrappers
     #############################
-    def fetch_batting_splits(self, player_id: int, season: int) -> pd.DataFrame:
+    def fetch_batting_splits(self, player_id: int, season: int):
         return MlbStatsClient.fetch_batter_stat_splits(player_id, season)
 
-    def fetch_pitching_splits(self, player_id: int, season: int) -> pd.DataFrame:
+    def fetch_pitching_splits(self, player_id: int, season: int):
         return MlbStatsClient.fetch_pitcher_stat_splits(player_id, season)
 
     def fetch_active_roster(
