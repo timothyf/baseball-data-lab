@@ -94,10 +94,10 @@ class Player:
         else:
             raise ValueError("At least one of 'mlbam_id' or 'player_name' must be provided.")
 
-        player.mlbam_id = mlbam_id #cls(mlbam_id, data_client=data_client)
+        player.mlbam_id = mlbam_id  # cls(mlbam_id, data_client=data_client)
         player.bbref_id = bbref_id
         mlb_player_info = player.data_client.fetch_player_info(mlbam_id)
-        player.player_info.set_from_mlb_info(mlb_player_info)
+        player.player_info = PlayerInfo.from_mlb_info(mlb_player_info)
         player.player_bio.set_from_mlb_info(mlb_player_info)
         player.set_team(mlb_player_info)
         return player

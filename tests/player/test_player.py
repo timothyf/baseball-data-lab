@@ -68,12 +68,29 @@ class DummyLookupClient:
 
 
 class DummyPlayerInfo:
-    def __init__(self):
-        self.primary_position = None
+    def __init__(
+        self,
+        mlbam_id=None,
+        first_name=None,
+        last_name=None,
+        link=None,
+        active=None,
+        primary_position=None,
+        use_name=None,
+    ):
+        self.mlbam_id = mlbam_id
+        self.first_name = first_name
+        self.last_name = last_name
+        self.link = link
+        self.active = active
+        self.primary_position = primary_position
+        self.use_name = use_name
 
-    def set_from_mlb_info(self, info):
-        self.primary_position = 'P' if info.get('primary_position', 'P') == 'P' else 'H'
-    
+    @classmethod
+    def from_mlb_info(cls, info):
+        primary_position = 'P' if info.get('primary_position', 'P') == 'P' else 'H'
+        return cls(primary_position=primary_position)
+
     def to_json(self):
         return {'info': True}
 
