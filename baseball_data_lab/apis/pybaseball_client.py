@@ -70,6 +70,10 @@ class PybaseballClient:
         statcast_data = pyb.statcast_batter(start_date, end_date, player_id)  
         return statcast_data
     
+    @staticmethod
+    def fetch_statcast_pitcher_data(pitcher_id: int, start_date: str, end_date: str):
+        statcast_data = pyb.statcast_pitcher(start_date, end_date, pitcher_id)
+        return statcast_data
 
     @staticmethod
     def save_statcast_batter_data(player_id: int, year: int, file_path: str = None):
@@ -108,12 +112,6 @@ class PybaseballClient:
         else:
             print("No valid statcast data found to save.")
         return
-    
-    @staticmethod
-    def fetch_statcast_pitcher_data(pitcher_id: int, start_date: str, end_date: str):
-        df_pyb = pyb.statcast_pitcher(start_date, end_date, pitcher_id)
-        df_pyb.head()
-        return df_pyb
 
 
     # Split types returned:
