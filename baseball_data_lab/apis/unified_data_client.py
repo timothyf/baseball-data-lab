@@ -166,8 +166,8 @@ class UnifiedDataClient:
     def fetch_player_stats_career(self, player_id: int):
         return MlbStatsClient.fetch_player_stats_career(player_id)
 
-    def get_leaderboard_data(self, season: int, group: str, stat_type: str, limit: int, offset: int, sort_order: str) -> pd.DataFrame:
-        return MlbStatsClient.get_leaderboard_data(season, group, stat_type, limit, offset, sort_order)
+    def get_leaderboard_data(self, season: int, league_ids: str, team_id: str, group: str, stat_type: str, limit: int, offset: int, sort_order: str) -> pd.DataFrame:
+        return MlbStatsClient.get_leaderboard_data(season, league_ids, team_id, group, stat_type, limit, offset, sort_order)
 
     #############################
     # PybaseballClient wrappers

@@ -561,7 +561,8 @@ class MlbStatsClient:
         return data
     
     @staticmethod
-    def get_leaderboard_data(season: int, group: str, stat_type: str, limit: int, offset: int, sort_order: str) -> pd.DataFrame:
+    def get_leaderboard_data(season: int, league_ids: str, team_id: str, group: str, stat_type: str,
+                             limit: int, offset: int, sort_order: str) -> pd.DataFrame:
         """Return the leaderboard data for a given season and stat type.
             Batting:
             https://bdfed.stitch.mlbinfra.com/bdfed/stats/player?&env=prod&season=2025&stats=season&group=hitting&gameType=R&limit=50&offset=0&sortStat=homeRuns&order=desc
@@ -570,7 +571,15 @@ class MlbStatsClient:
             Fielding:
             https://bdfed.stitch.mlbinfra.com/bdfed/stats/player?&env=prod&season=2025&stats=season&group=fielding&gameType=R&limit=50&offset=0&sortStat=fielding&order=desc
          """
-        url = f"{MLB_INFRA_BASE_URL}stats/player?&env=prod&season={season}&stats=season&group={group}&gameType=R&limit={limit}&offset={offset}&sortStat={stat_type}&order={sort_order}"
+        base = f"{MLB_INFRA_BASE_URL}stats/player?&env=prod&season={season}&leagueIds={league_ids}"
+        if team_id is not None and team_id != "" and team_id != "null":
+            base += f"&teamId={team_id}"
+        url = (
+            f"{base}"
+            f"&stats=season&group={group}&gameType=R"
+            f"&limit={limit}&offset={offset}"
+            f"&sortStat={stat_type}&order={sort_order}"
+        )
         data = MlbStatsClient._get_json(url)
         return data
 
