@@ -13,7 +13,7 @@ from requests.adapters import HTTPAdapter, Retry
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-from baseball_data_lab.config import STATS_API_BASE_URL, SAVANT_BASE_URL, MLB_INFRA_BASE_URL
+from baseball_data_lab.config.paths import STATS_API_BASE_URL, SAVANT_BASE_URL, MLB_INFRA_BASE_URL
 from datetime import date
 
 
@@ -115,11 +115,10 @@ class MlbStatsClient:
         logger.info("Fetching batter stat splits...")
         url = (
             f"{STATS_API_BASE_URL}people?personIds={player_id}"
-            f"&hydrate=stats(group=[hitting],type=statSplits,sitCodes=[vr,vl,h,a,d,n,preas,posas,val,vnl,r0,r123,ron,ac,bc],season={year})"
+            f"&hydrate=stats(group=[hitting],type=statSplits,sitCodes=[vr,vl,h,a],season={year})"
         )
         data = MlbStatsClient._get_json(url)
-        return data["people"][0]["stats"][0]["splits"]
-        #return MlbStatsClient._process_splits(data["people"][0]["stats"][0]["splits"])
+        return MlbStatsClient._process_splits(data["people"][0]["stats"][0]["splits"])
 
     @staticmethod
     def fetch_pitcher_stat_splits(player_id: int, year: int):
@@ -129,11 +128,10 @@ class MlbStatsClient:
         """
         url = (
             f"{STATS_API_BASE_URL}people?personIds={player_id}"
-            f"&hydrate=stats(group=[pitching],type=statSplits,sitCodes=[vr,vl,h,a,d,n,preas,posas,val,vnl,r0,r123,ron,ac,bc],season={year})"
+            f"&hydrate=stats(group=[pitching],type=statSplits,sitCodes=[vr,vl],season={year})"
         )
         data = MlbStatsClient._get_json(url)
-        return data["people"][0]["stats"][0]["splits"]
-        #return MlbStatsClient._process_splits(data["people"][0]["stats"][0]["splits"])
+        return MlbStatsClient._process_splits(data["people"][0]["stats"][0]["splits"])
 
     # @staticmethod
     # def fetch_player_stats(player_id: int, year: int):

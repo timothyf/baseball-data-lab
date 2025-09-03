@@ -9,7 +9,7 @@ import sys
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 
 from baseball_data_lab.apis.unified_data_client import UnifiedDataClient
-from baseball_data_lab.config import DATA_DIR
+from baseball_data_lab.config.paths import DATA_DIR
 
 # Constants
 SEASON = 2024  # Replace with the desired season

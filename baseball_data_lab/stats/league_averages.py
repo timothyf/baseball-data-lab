@@ -2,8 +2,8 @@
 
 import pandas as pd
 import os
-from baseball_data_lab.config import BASE_DIR  
-from baseball_data_lab.config import LeagueTeams
+from baseball_data_lab.config.paths import BASE_DIR
+from baseball_data_lab.config.stats import LeagueTeams
 
 
 DEFAULT_METRICS = ["PA", "AB", "H", "HR", "SO", "RBI", "SB"]  # HR: home runs, SO: strikeouts, BA: batting average, RBI: runs batted in 

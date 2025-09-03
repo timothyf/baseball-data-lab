@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from matplotlib.ticker import FuncFormatter
-from baseball_data_lab.config import FontConfig, pitch_colors
+from baseball_data_lab.config.visual import FontConfig, pitch_colors
 
 
 

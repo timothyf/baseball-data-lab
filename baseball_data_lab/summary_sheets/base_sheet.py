@@ -3,7 +3,8 @@ import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 
 from baseball_data_lab.data_viz.plotting import Plotting
-from baseball_data_lab.config import FOOTER_TEXT, BASE_DIR
+from baseball_data_lab.config.visual import FOOTER_TEXT
+from baseball_data_lab.config.paths import BASE_DIR
 from baseball_data_lab.utils import Utils
 from baseball_data_lab.apis.unified_data_client import UnifiedDataClient
 from baseball_data_lab.apis.local_data_client import LocalDataClient

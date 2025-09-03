@@ -12,7 +12,7 @@ from baseball_data_lab.player.player_bio import PlayerBio
 from baseball_data_lab.player.player_lookup import PlayerLookup
 from baseball_data_lab.apis.unified_data_client import UnifiedDataClient
 from baseball_data_lab.player.player_info import PlayerInfo
-from baseball_data_lab.config import STATCAST_DATA_DIR
+from baseball_data_lab.config.paths import STATCAST_DATA_DIR
 
 logger = logging.getLogger(__name__)
 

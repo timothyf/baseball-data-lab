@@ -12,7 +12,7 @@ from tqdm import tqdm
 
 from baseball_data_lab.apis.unified_data_client import UnifiedDataClient
 from baseball_data_lab.player.player import Player
-from baseball_data_lab.config import DATA_DIR
+from baseball_data_lab.config.paths import DATA_DIR
 from baseball_data_lab.exceptions.custom_exceptions import NoFangraphsIdError
 from baseball_data_lab.exceptions.custom_exceptions import PlayerNotFoundError
 from baseball_data_lab.exceptions.custom_exceptions import PositionMismatchError

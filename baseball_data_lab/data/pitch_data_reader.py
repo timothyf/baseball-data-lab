@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 from typing import List
 import pandas as pd
 
-from baseball_data_lab.config import DATA_DIR
+from baseball_data_lab.config.paths import DATA_DIR
 
 @dataclass
 class PitchDataReader:

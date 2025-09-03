@@ -1,5 +1,5 @@
 import requests
-from baseball_data_lab.config import MLB_STATIC_BASE_URL
+from baseball_data_lab.config.paths import MLB_STATIC_BASE_URL
 from PIL import Image
 from io import BytesIO
 

@@ -4,7 +4,7 @@ import pytest
 
 from baseball_data_lab.apis import fangraphs_client
 from baseball_data_lab.apis.fangraphs_client import FangraphsClient
-from baseball_data_lab.config import FANGRAPHS_BASE_URL
+from baseball_data_lab.config.paths import FANGRAPHS_BASE_URL
 
 class DummyResponse:
     def __init__(self, data):

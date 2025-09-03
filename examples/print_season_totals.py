@@ -7,7 +7,7 @@ from pathlib import Path
 import sys
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 
-from baseball_data_lab.config import LeagueTeams
+from baseball_data_lab.config.stats import LeagueTeams
 
 
 def extract_team_abbrev(html_str):

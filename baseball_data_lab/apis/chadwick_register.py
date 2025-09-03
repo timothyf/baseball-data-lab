@@ -7,7 +7,7 @@ from difflib import get_close_matches
 from typing import List, Tuple, Iterable, Optional
 
 import pandas as pd
-from baseball_data_lab.config import DATA_DIR
+from baseball_data_lab.config.paths import DATA_DIR
 
 
 class ChadwickRegister:

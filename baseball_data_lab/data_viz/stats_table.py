@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from typing import List
 from baseball_data_lab.utils import Utils
-from baseball_data_lab.config import StatsDisplayConfig
+from baseball_data_lab.config.stats import StatsDisplayConfig
 
 
 class StatsTable:
