@@ -89,8 +89,28 @@ class MlbStatsClient:
     def fetch_player_info(player_id: int):
         """Fetch player information by MLBAM player ID.
             https://statsapi.mlb.com/api/v1/people?personIds=669373&hydrate=currentTeam
+
+            Available hydrations:
+            [
+                "awards",
+                "currentTeam",
+                "team",
+                "rosterEntries",
+                "jobs",
+                "relatives",
+                "transactions",
+                "social",
+                "education",
+                "stats",
+                "draft",
+                "xrefId",
+                "nicknames",
+                "depthChart",
+                "nextStarts",
+                "rookieSeasons"
+                ]
         """
-        url = f"{STATS_API_BASE_URL}people?personIds={player_id}&hydrate=currentTeam"
+        url = f"{STATS_API_BASE_URL}people?personIds={player_id}&hydrate=currentTeam,draft"
         data = MlbStatsClient._get_json(url)
         return data["people"][0]
 
@@ -115,10 +135,10 @@ class MlbStatsClient:
         logger.info("Fetching batter stat splits...")
         url = (
             f"{STATS_API_BASE_URL}people?personIds={player_id}"
-            f"&hydrate=stats(group=[hitting],type=statSplits,sitCodes=[vr,vl,h,a],season={year})"
+            f"&hydrate=stats(group=[hitting],type=statSplits,sitCodes=[vr,vl,h,a,d,n,preas,posas,val,vnl,r0,r123,ron,ac,bc],season={year})"
         )
         data = MlbStatsClient._get_json(url)
-        return MlbStatsClient._process_splits(data["people"][0]["stats"][0]["splits"])
+        return data["people"][0]["stats"][0]["splits"]
 
     @staticmethod
     def fetch_pitcher_stat_splits(player_id: int, year: int):
@@ -128,10 +148,10 @@ class MlbStatsClient:
         """
         url = (
             f"{STATS_API_BASE_URL}people?personIds={player_id}"
-            f"&hydrate=stats(group=[pitching],type=statSplits,sitCodes=[vr,vl],season={year})"
+            f"&hydrate=stats(group=[pitching],type=statSplits,sitCodes=[vr,vl,h,a,d,n,preas,posas,val,vnl,r0,r123,ron,ac,bc],season={year})"
         )
         data = MlbStatsClient._get_json(url)
-        return MlbStatsClient._process_splits(data["people"][0]["stats"][0]["splits"])
+        return data["people"][0]["stats"][0]["splits"]
 
     # @staticmethod
     # def fetch_player_stats(player_id: int, year: int):
