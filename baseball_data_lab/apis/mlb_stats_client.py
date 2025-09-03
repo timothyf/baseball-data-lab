@@ -542,7 +542,10 @@ class MlbStatsClient:
     def get_player_gamelog(player_id: int, stat_type: str,  season: int) -> pd.DataFrame:
         """Return the game log data for a given player ID and season.
             stat_type = hitting, pitching, or fielding
+            # Hitting Example
             https://statsapi.mlb.com/api/v1/people/682985/stats?stats=gameLog,statSplits,statsSingleSeason&leagueListId=mlb_hist&group=&gameType=R&sitCodes=1,2,3,4,5,6,7,8,9,10,11,12&hydrate=team&season=2025&language=en
+            # Pitching Example
+            https://statsapi.mlb.com/api/v1/people/669373/stats?stats=gameLog,statSplits,statsSingleSeason&leagueListId=mlb_hist&group=pitching&gameType=R&sitCodes=1,2,3,4,5,6,7,8,9,10,11,12&hydrate=team&season=2025&language=en
         """
         url = f"{STATS_API_BASE_URL}people/{player_id}/stats?stats=gameLog,statSplits,statsSingleSeason&leagueListId=mlb_hist&group={stat_type}&gameType=R&sitCodes=1,2,3,4,5,6,7,8,9,10,11,12&hydrate=team&season={season}&language=en"
         data = MlbStatsClient._get_json(url)
