@@ -694,6 +694,23 @@ class MlbStatsClient:
         return f"{STATS_API_BASE_URL}{endpoint}?{urlencode(query_params, safe='[],()')}"
     
 
-# def process_splits(data: List[Dict[str, Any]]) -> pd.DataFrame:
-#     """Compatibility wrapper around :meth:`MlbStatsClient._process_splits`."""
-#     return MlbStatsClient._process_splits(data)
+def process_splits(data: List[Dict[str, Any]]) -> pd.DataFrame:
+    """Public wrapper around :meth:`MlbStatsClient._process_splits`.
+
+    Parameters
+    ----------
+    data : List[Dict[str, Any]]
+        Raw split data returned from the Stats API.
+
+    Returns
+    -------
+    pandas.DataFrame
+        Reformatted split statistics.
+    """
+    return MlbStatsClient._process_splits(data)
+
+
+__all__ = [
+    "MlbStatsClient",
+    "process_splits",
+]
