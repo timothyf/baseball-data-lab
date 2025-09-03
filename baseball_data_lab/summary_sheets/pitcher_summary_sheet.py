@@ -10,11 +10,11 @@ from baseball_data_lab.data_viz.pitch_break_plot import PitchBreakPlot
 from baseball_data_lab.data_viz.pitch_breakdown_table import PitchBreakdownTable
 from baseball_data_lab.constants import swing_code, whiff_code
 from baseball_data_lab.config import DATA_DIR
-from baseball_data_lab.summary_sheets.summary_sheet import SummarySheet
+from baseball_data_lab.summary_sheets.base_sheet import BaseSheet
 from baseball_data_lab.apis.local_data_client import LocalDataClient
 
 
-class PitcherSummarySheet(SummarySheet):
+class PitcherSummarySheet(BaseSheet):
 
     def __init__(self, player: Player, season: int):
         super().__init__(season)

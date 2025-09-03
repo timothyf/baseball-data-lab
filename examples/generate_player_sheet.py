@@ -11,7 +11,6 @@ from baseball_data_lab.summary_sheets.pitcher_summary_sheet import PitcherSummar
 from baseball_data_lab.summary_sheets.batter_summary_sheet import BatterSummarySheet
 from baseball_data_lab.team.roster import Roster
 from baseball_data_lab.team.team import Team
-from baseball_data_lab.player_sheets.player_sheet import PlayerSheet
 import warnings
 from bs4 import MarkupResemblesLocatorWarning
 import argparse
@@ -23,11 +22,14 @@ players_not_found = []
 
 def generate_player_sheet(player_name: str, year: int=2024):
     player = Player.create_from_mlb(player_name=player_name)
-    if player is N 888rone:
+    if player is None:
         print(f"Player {player_name} not found.")
         players_not_found.append(player_name)
         return
-    sheet = PlayerSheet(player)
+    if player.player_info.primary_position == 'P':
+        sheet = PitcherSummarySheet(player, year)
+    else:
+        sheet = BatterSummarySheet(player, year)
     sheet.generate_plots()
 
 

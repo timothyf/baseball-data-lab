@@ -4,10 +4,10 @@ from baseball_data_lab.player.player import Player
 from baseball_data_lab.stats.stats_display import StatsDisplay
 from baseball_data_lab.data_viz.batting_spray_chart import BattingSprayChart
 from baseball_data_lab.constants import statcast_events
-from baseball_data_lab.summary_sheets.summary_sheet import SummarySheet
+from baseball_data_lab.summary_sheets.base_sheet import BaseSheet
 
 
-class BatterSummarySheet(SummarySheet):
+class BatterSummarySheet(BaseSheet):
 
     def __init__(self, player: Player, season: int):
         super().__init__(season)
