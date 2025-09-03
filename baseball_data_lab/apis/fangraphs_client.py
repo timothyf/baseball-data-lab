@@ -1,4 +1,4 @@
-from baseball_data_lab.config import FANGRAPHS_BASE_URL, FANGRAPHS_NEXT_URL
+from baseball_data_lab.config.paths import FANGRAPHS_BASE_URL, FANGRAPHS_NEXT_URL
 import pandas as pd
 import requests
 

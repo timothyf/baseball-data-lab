@@ -2,7 +2,7 @@ import json
 import numpy as np
 import pandas as pd
 import os
-from baseball_data_lab.config import BASE_DIR
+from baseball_data_lab.config.paths import BASE_DIR
 from baseball_data_lab.apis.chadwick_register import PlayerSearchClient
 from baseball_data_lab.exceptions.custom_exceptions import NoFangraphsIdError
 

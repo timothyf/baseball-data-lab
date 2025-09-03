@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 # Application-specific imports
-from baseball_data_lab.config import StatsConfig
+from baseball_data_lab.config.stats import StatsConfig
 from baseball_data_lab.data_viz.stats_table import StatsTable
 from baseball_data_lab.player.player import Player
 

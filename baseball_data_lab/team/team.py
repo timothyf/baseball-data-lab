@@ -4,10 +4,10 @@ from typing import Optional, TYPE_CHECKING
 
 from baseball_data_lab.constants import team_logo_urls
 from baseball_data_lab.team.roster import Roster
-from baseball_data_lab.config import BASE_DIR
+from baseball_data_lab.config.paths import BASE_DIR
 from baseball_data_lab.utils import Utils
 from baseball_data_lab.data.fangraphs_teams import FangraphsTeams
-from baseball_data_lab.config import DATA_DIR
+from baseball_data_lab.config.paths import DATA_DIR
 from baseball_data_lab.stats.team_season_stats import TeamSeasonStats
 if TYPE_CHECKING:
     # Only for type checkers; doesn't run at runtime, avoids circular import

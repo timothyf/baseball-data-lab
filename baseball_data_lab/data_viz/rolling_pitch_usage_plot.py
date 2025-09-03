@@ -6,7 +6,7 @@ import matplotlib.ticker as mtick
 from matplotlib.ticker import MaxNLocator
 import seaborn as sns
 
-from baseball_data_lab.config import FontConfig, pitch_colors
+from baseball_data_lab.config.visual import FontConfig, pitch_colors
 
 
 class RollingPitchUsagePlot:

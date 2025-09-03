@@ -1,39 +1,4 @@
-from dataclasses import dataclass, field
-from typing import Dict, List
-import os
-
-STATS_API_BASE_URL = "https://statsapi.mlb.com/api/v1/"
-SAVANT_BASE_URL = "https://baseballsavant.mlb.com/"
-FANGRAPHS_BASE_URL = "https://www.fangraphs.com/api/leaders/major-league/data"
-FANGRAPHS_NEXT_URL = "https://www.fangraphs.com/_next/data/Gtd7iofF2h1X98b-Nerh6/players"
-MLB_STATIC_BASE_URL = "https://img.mlbstatic.com/mlb-photos/image/"
-MLB_INFRA_BASE_URL = "https://bdfed.stitch.mlbinfra.com/bdfed/"
-
-# https://tjstatsapps-2025-mlb-pitching-app.hf.space/session/d2492a78e6783686d77e033535d0f94086a09e7c5b5fcc3ff961abc3c39ee809/download/download_all?w=
-
-# Set BASE_DIR to the project root (baseball-data-lab directory)
-BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-
-# Now you can correctly build paths relative to the project root
-DATA_DIR = os.path.join(BASE_DIR, 'baseball_data_lab', 'data')
-
-# Statcast Data output directory
-STATCAST_DATA_DIR = os.path.join(BASE_DIR, 'output')
-
-# Player sheets output directory
-PLAYER_SHEETS_DIR = os.path.join(BASE_DIR, 'output')
-
-FOOTER_TEXT = {
-    1: {
-        'text': 'Code by: Timothy Fisher',
-        'fontsize': 24 },
-    2: {
-        'text': 'Color Coding Compares to League Average By Pitch',
-        'fontsize': 16 },
-    3: {
-        'text': 'Data: MLB, Fangraphs\nImages: MLB, ESPN',
-        'fontsize': 24 }
-}
+from dataclasses import dataclass
 
 pitch_summary_columns = [ 'pitch_description',
             'pitch',
@@ -53,57 +18,8 @@ pitch_summary_columns = [ 'pitch_description',
         ]
 
 
-### PITCH COLORS ###
-pitch_colors = {
-    ## Fastballs ##
-    'FF': {'color': '#FF007D', 'name': '4-Seam Fastball'},
-    'FA': {'color': '#FF007D', 'name': 'Fastball'},
-    'SI': {'color': '#98165D', 'name': 'Sinker'},
-    'FC': {'color': '#BE5FA0', 'name': 'Cutter'},
-
-    ## Offspeed ##
-    'CH': {'color': '#F79E70', 'name': 'Changeup'},
-    'FS': {'color': '#FE6100', 'name': 'Splitter'},
-    'SC': {'color': '#F08223', 'name': 'Screwball'},
-    'FO': {'color': '#FFB000', 'name': 'Forkball'},
-
-    ## Sliders ##
-    'SL': {'color': '#67E18D', 'name': 'Slider'},
-    'ST': {'color': '#1BB999', 'name': 'Sweeper'},
-    'SV': {'color': '#376748', 'name': 'Slurve'},
-
-    ## Curveballs ##
-    'KC': {'color': '#311D8B', 'name': 'Knuckle Curve'},
-    'CU': {'color': '#3025CE', 'name': 'Curveball'},
-    'CS': {'color': '#274BFC', 'name': 'Slow Curve'},
-    'EP': {'color': '#648FFF', 'name': 'Eephus'},
-
-    ## Others ##
-    'KN': {'color': '#867A08', 'name': 'Knuckleball'},
-    'PO': {'color': '#472C30', 'name': 'Pitch Out'},
-    'UN': {'color': '#9C8975', 'name': 'Unknown'},
-}
-
-
 @dataclass
-class FontConfig:
-    default_family: str = 'DejaVu Sans'
-    default_size: int = 12
-    title_size: int = 20
-    axes_size: int = 16
-    
-    font_properties: dict = field(init=False)
-    
-    def __post_init__(self):
-        # Setup the font properties for easy access
-        self.font_properties = {
-            'default': {'family': self.default_family, 'size': self.default_size},
-            'titles': {'family': self.default_family, 'size': self.title_size, 'fontweight': 'bold'},
-            'axes': {'family': self.default_family, 'size': self.axes_size},
-        }
-
-@dataclass
-class LeagueTeams: 
+class LeagueTeams:
     items = {
     'AL': {
     'BAL', 'BOS', 'CHW', 'CHA', 'CLE', 'DET',
@@ -115,29 +31,30 @@ class LeagueTeams:
     'PIT', 'SDP', 'SDN', 'SFG', 'SFN', 'STL', 'WSN', 'WSH' }
 }
 
+
 @dataclass
 class StatsConfig:
 
     stat_lists = {
         'batting': {
             'standard': ['G', 'PA', 'AB', 'H', '2B', '3B', 'HR', 'R', 'RBI', 'BB', 'IBB', 'SO', 'HBP', 'SF', 'SH', 'GDP', 'SB', 'CS', 'AVG'],
-            #'standard': ['G', 'PA', 'AB', 'H', '1B', '2B', '3B', 'HR', 'R', 'RBI', 'BB', 'IBB', 'SO', 'HBP', 'SF', 'SH', 'GDP', 'SB', 'CS', 'AVG'],
             'advanced': ['BB%', 'K%', 'AVG', 'OBP', 'SLG', 'OPS', 'ISO', 'Spd', 'BABIP', 'UBR', 'wRC', 'wRAA', 'wOBA', 'wRC+', 'WAR'],
-            'splits': ["gamesPlayed", "groundOuts", "airOuts", "doubles", "triples", "homeRuns", "strikeOuts", 
-                       "baseOnBalls", "intentionalWalks", "hits", "hitByPitch", "avg", "atBats", "obp", "slg", "ops", 
-                       "groundIntoDoublePlay", "numberOfPitches", "plateAppearances", 
+            'splits': ["gamesPlayed", "groundOuts", "airOuts", "doubles", "triples", "homeRuns", "strikeOuts",
+                       "baseOnBalls", "intentionalWalks", "hits", "hitByPitch", "avg", "atBats", "obp", "slg", "ops",
+                       "groundIntoDoublePlay", "numberOfPitches", "plateAppearances",
                        "totalBases", "rbi", "leftOnBase", "sacBunts", "sacFlies", "babip"]
         },
         'pitching': {
             'standard': ['W', 'L', 'ERA', 'G', 'GS', 'CG', 'ShO', 'SV', 'HLD', 'BS', 'IP', 'TBF', 'H', 'R', 'ER', 'HR', 'BB', 'IBB', 'HBP', 'WP', 'BK', 'SO'],
             'advanced': ['K/9', 'BB/9', 'K/BB', 'H/9', 'HR/9', 'K%', 'BB%', 'K-BB%', 'AVG', 'WHIP', 'BABIP', 'LOB%', 'ERA-', 'FIP-','FIP', 'RS/9', 'Swing%'],
-            'splits': ["groundOuts", "airOuts", "doubles", "triples", "homeRuns", "strikeOuts", 
-                       "baseOnBalls", "hits", "hitByPitch", "avg", "atBats", "obp", "slg", 
-                       "ops", "numberOfPitches", "inningsPitched", "whip", 
-                       "battersFaced", "balls", "strikes", "strikePercentage", 
+            'splits': ["groundOuts", "airOuts", "doubles", "triples", "homeRuns", "strikeOuts",
+                       "baseOnBalls", "hits", "hitByPitch", "avg", "atBats", "obp", "slg",
+                       "ops", "numberOfPitches", "inningsPitched", "whip",
+                       "battersFaced", "balls", "strikes", "strikePercentage",
                        "pitchesPerInning","strikeoutWalkRatio", "strikeoutsPer9Inn", "walksPer9Inn", "hitsPer9Inn"]
         },
     }
+
 
 @dataclass
 class StatsDisplayConfig:
@@ -258,8 +175,8 @@ class StatsDisplayConfig:
 
     batting = {
         'gamesPlayed': {'table_header': r'$\bf{G}$'},
-        'G': {'table_header': r'$\bf{G}$', 'format': '.0f'}, 
-        'GS': {'table_header': r'$\bf{GS}$', 'format': '.0f'}, 
+        'G': {'table_header': r'$\bf{G}$', 'format': '.0f'},
+        'GS': {'table_header': r'$\bf{GS}$', 'format': '.0f'},
         'PA': {'table_header': r'$\bf{PA}$', 'format': '.0f'},
         'plateAppearances': {'table_header': r'$\bf{PA}$'},
         'AB': {'table_header': r'$\bf{AB}$', 'format': '.0f'},
@@ -354,6 +271,3 @@ class StatsDisplayConfig:
         'chase_rate': {'table_header': '$\\bf{Chase\\%}$', 'format': '.1%'},
         'delta_run_exp_per_100': {'table_header': '$\\bf{RV\\//100}$', 'format': '.1f'}
     }
-
-
-

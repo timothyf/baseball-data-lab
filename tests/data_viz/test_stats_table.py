@@ -4,8 +4,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 from baseball_data_lab.data_viz.stats_table import StatsTable
-from baseball_data_lab.config import StatsDisplayConfig
-from baseball_data_lab.config import StatsConfig
+from baseball_data_lab.config.stats import StatsDisplayConfig
+from baseball_data_lab.config.stats import StatsConfig
 from baseball_data_lab.apis.mlb_stats_client import process_splits
 
 

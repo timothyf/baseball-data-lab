@@ -9,7 +9,7 @@ from baseball_data_lab.data_viz.rolling_pitch_usage_plot import RollingPitchUsag
 from baseball_data_lab.data_viz.pitch_break_plot import PitchBreakPlot
 from baseball_data_lab.data_viz.pitch_breakdown_table import PitchBreakdownTable
 from baseball_data_lab.constants import swing_code, whiff_code
-from baseball_data_lab.config import DATA_DIR
+from baseball_data_lab.config.paths import DATA_DIR
 from baseball_data_lab.summary_sheets.base_sheet import BaseSheet
 from baseball_data_lab.apis.local_data_client import LocalDataClient
 

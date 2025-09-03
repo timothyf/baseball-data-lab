@@ -6,7 +6,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 
 from baseball_data_lab.player.player import Player
-from baseball_data_lab.config import DATA_DIR
+from baseball_data_lab.config.paths import DATA_DIR
 from baseball_data_lab.utils import Utils
 
 # Suppress MarkupResemblesLocatorWarning
