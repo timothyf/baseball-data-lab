@@ -135,34 +135,41 @@ class MlbStatsClient:
         return MlbStatsClient._get_json(url)
 
     @staticmethod
-    def fetch_batter_stat_splits(player_id: int, year: int):
+    def _fetch_stat_splits(
+        player_id: int, year: int, group: Literal["hitting", "pitching"]
+    ) -> List[Dict[str, Any]]:
+        """Internal helper to fetch stat splits for a player.
+
+        Parameters
+        ----------
+        player_id : int
+            MLBAM player identifier.
+        year : int
+            Season year to query.
+        group : Literal["hitting", "pitching"]
+            Stats API group to request.
         """
-        Fetch batter stat splits for a player in a specific year.
-       https://statsapi.mlb.com/api/v1/people?personIds=682985&hydrate=stats(group=[hitting],type=statSplits,sitCodes=[d7,d15,d30,vr,vl,h,a],season=2024)
-        
-        lookup sitCodes here
-          https://statsapi.mlb.com/api/v1/situationCodes         
-        """
-        logger.info("Fetching batter stat splits...")
+        sit_codes = "vr,vl" if group == "pitching" else "vr,vl,h,a"
         url = (
             f"{STATS_API_BASE_URL}people?personIds={player_id}"
-            f"&hydrate=stats(group=[hitting],type=statSplits,sitCodes=[vr,vl,h,a,d,n,preas,posas,val,vnl,r0,r123,ron,ac,bc],season={year})"
+            f"&hydrate=stats(group=[{group}],type=statSplits,"
+            f"sitCodes=[{sit_codes}],season={year})"
         )
         data = MlbStatsClient._get_json(url)
-        return data["people"][0]["stats"][0]["splits"]
+        splits = data["people"][0]["stats"][0]["splits"]
+        return MlbStatsClient._process_splits(splits)
+
+    @staticmethod
+    def fetch_batter_stat_splits(player_id: int, year: int):
+        """Fetch batter stat splits for a player in a specific year."""
+        logger.info("Fetching batter stat splits...")
+        return MlbStatsClient._fetch_stat_splits(player_id, year, "hitting")
 
     @staticmethod
     def fetch_pitcher_stat_splits(player_id: int, year: int):
-        """
-        Fetch pitcher stat splits for a player in a specific year.
-        https://statsapi.mlb.com/api/v1/people?personIds=669373&hydrate=stats(group=[pitching],type=statSplits,sitCodes=[vr,vl],season=2024)
-        """
-        url = (
-            f"{STATS_API_BASE_URL}people?personIds={player_id}"
-            f"&hydrate=stats(group=[pitching],type=statSplits,sitCodes=[vr,vl,h,a,d,n,preas,posas,val,vnl,r0,r123,ron,ac,bc],season={year})"
-        )
-        data = MlbStatsClient._get_json(url)
-        return data["people"][0]["stats"][0]["splits"]
+        """Fetch pitcher stat splits for a player in a specific year."""
+        logger.info("Fetching pitcher stat splits...")
+        return MlbStatsClient._fetch_stat_splits(player_id, year, "pitching")
 
     # @staticmethod
     # def fetch_player_stats(player_id: int, year: int):
