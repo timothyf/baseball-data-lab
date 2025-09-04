@@ -6,15 +6,13 @@ from baseball_data_lab.data_viz.batting_spray_chart import BattingSprayChart
 from baseball_data_lab.constants import statcast_events
 from baseball_data_lab.summary_sheets.base_sheet import BaseSheet
 from baseball_data_lab.utils import Utils
+from baseball_data_lab.summary_sheets.player_summary_sheet import PlayerSummarySheet
 
 
-class BatterSummarySheet(BaseSheet):
+class BatterSummarySheet(PlayerSummarySheet):
 
     def __init__(self, player: Player, season: int):
-        super().__init__(season)
-        self.player = player
-        self.player.load_stats_for_season(season)
-        self.player.load_statcast_data(self.start_date, self.end_date)
+        super().__init__(player, season)
         self.columns_count = 8
         self.rows_count = 8
         self.height_ratios = [2, 20, 5, 5, 16, 46, 1, 8]
