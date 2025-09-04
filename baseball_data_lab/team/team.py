@@ -37,10 +37,11 @@ class Team:
         self.season_stats = None # Team stats for a given season
         
 
-    def get_logo(self):
-        if self.abbrev not in team_logo_urls:
+    def get_logo(self, abbrev: str | None = None):
+        abbrev = self.abbrev if abbrev is None else abbrev
+        if abbrev not in team_logo_urls:
             return None
-        return self.data_client.fetch_logo_img(team_logo_urls[self.abbrev])
+        return self.data_client.fetch_logo_img(team_logo_urls[abbrev])
     
     def set_season_roster(self, season):
         self.season_roster = Roster()
@@ -71,12 +72,6 @@ class Team:
         team = team[-1]
         self.fangraphs_id = team['teamIDfg']
     
-
-    def get_team_logo(self, abbrev: str):
-        if abbrev not in team_logo_urls:
-            return None
-        return self.data_client.fetch_logo_img(team_logo_urls[abbrev])
-
     @staticmethod
     def create_from_mlb(team_id: int = None, team_name: str = None, season: int = 2024, data_client: Optional[UnifiedDataClient] = None):
         if team_id is None and team_name is None:
