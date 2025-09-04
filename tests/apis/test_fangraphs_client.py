@@ -52,15 +52,15 @@ def test_fetch_player_stats_invalid_type():
 
 def test_fetch_leaderboards_dispatch(monkeypatch):
     calls = []
-    def fake_pitch(season):
-        calls.append(("pitch", season))
-    def fake_bat(season):
-        calls.append(("bat", season))
-    monkeypatch.setattr(FangraphsClient, "fetch_pitching_leaderboards", fake_pitch)
-    monkeypatch.setattr(FangraphsClient, "fetch_batting_leaderboards", fake_bat)
+
+    def fake_helper(season, stat, as_json=False):
+        calls.append((season, stat, as_json))
+
+    monkeypatch.setattr(FangraphsClient, "_fetch_leaderboards", fake_helper)
+
     FangraphsClient.fetch_leaderboards(2030, "pitching")
-    FangraphsClient.fetch_leaderboards(2031, "batting")
-    assert calls == [("pitch", 2030), ("bat", 2031)]
+    FangraphsClient.fetch_leaderboards(2031, "batting", as_json=True)
+    assert calls == [(2030, "pit", False), (2031, "bat", True)]
     with pytest.raises(ValueError):
         FangraphsClient.fetch_leaderboards(2000, "oops")
 

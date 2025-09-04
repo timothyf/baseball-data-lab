@@ -62,41 +62,54 @@ class FangraphsClient:
         return df
 
     @staticmethod
-    def fetch_leaderboards(season:int, stat_type:str):
-        if stat_type == 'pitching':
-            return FangraphsClient.fetch_pitching_leaderboards(season)
-        elif stat_type == 'batting':
-            return FangraphsClient.fetch_batting_leaderboards(season)
-        else:
-            raise ValueError("Invalid stat_type. Must be 'pitching' or 'batting'")
+    def _fetch_leaderboards(season: int, stat: str, as_json: bool = False):
+        """Build the Fangraphs leaderboard URL and return data.
+
+        Parameters
+        ----------
+        season: int
+            Season to query.
+        stat: str
+            Statistic type used by Fangraphs (e.g. ``"bat"`` or ``"pit"``).
+        as_json: bool, default False
+            If True return the raw JSON payload, otherwise return a DataFrame.
+        """
+        url = (
+            f"{FANGRAPHS_BASE_URL}?age=&pos=all&stats={stat}&lg=all"
+            f"&season={season}&season1={season}&ind=0&qual=0&type=8"
+            f"&month=0&pageitems=500000"
+        )
+        data = requests.get(url).json()
+        if as_json:
+            return data
+        return pd.DataFrame(data=data["data"])
 
     @staticmethod
-    def fetch_pitching_leaderboards(season:int):
-        url = f"{FANGRAPHS_BASE_URL}?age=&pos=all&stats=pit&lg=all&season={season}&season1={season}&ind=0&qual=0&type=8&month=0&pageitems=500000"
-        data = requests.get(url).json()
-        df = pd.DataFrame(data=data['data'])
-        return df
+    def fetch_leaderboards(season: int, stat_type: str, as_json: bool = False):
+        stat_map = {"pitching": "pit", "batting": "bat"}
+        try:
+            stat = stat_map[stat_type]
+        except KeyError:
+            raise ValueError("Invalid stat_type. Must be 'pitching' or 'batting'")
+        return FangraphsClient._fetch_leaderboards(season, stat, as_json=as_json)
+
+    @staticmethod
+    def fetch_pitching_leaderboards(season: int):
+        return FangraphsClient._fetch_leaderboards(season, "pit")
     
     # Sample
     # https://www.fangraphs.com/api/leaders/major-league/data?age=&pos=all&stats=bat&lg=all&season=2024&season1=2024&ind=0&qual=0&type=8&month=0&pageitems=10
     @staticmethod
-    def fetch_batting_leaderboards(season:int):
-        url = f"{FANGRAPHS_BASE_URL}?age=&pos=all&stats=bat&lg=all&season={season}&season1={season}&ind=0&qual=0&type=8&month=0&pageitems=500000"
-        data = requests.get(url).json()
-        df = pd.DataFrame(data=data['data'])
-        return df #df
+    def fetch_batting_leaderboards(season: int):
+        return FangraphsClient._fetch_leaderboards(season, "bat")
     
     @staticmethod
-    def fetch_batting_leaderboards_as_json(season:int):
-        url = f"{FANGRAPHS_BASE_URL}?age=&pos=all&stats=bat&lg=all&season={season}&season1={season}&ind=0&qual=0&type=8&month=0&pageitems=500000"
-        data = requests.get(url).json()
-        return data['data']
+    def fetch_batting_leaderboards_as_json(season: int):
+        return FangraphsClient._fetch_leaderboards(season, "bat", as_json=True)
     
     @staticmethod
-    def fetch_pitching_leaderboards_as_json(season:int):
-        url = f"{FANGRAPHS_BASE_URL}?age=&pos=all&stats=pit&lg=all&season={season}&season1={season}&ind=0&qual=0&type=8&month=0&pageitems=500000"
-        data = requests.get(url).json()
-        return data
+    def fetch_pitching_leaderboards_as_json(season: int):
+        return FangraphsClient._fetch_leaderboards(season, "pit", as_json=True)
     
 
     # FANGRAPHS_BASE_URL = "https://www.fangraphs.com/api/leaders/major-league/data"
@@ -134,22 +147,5 @@ class FangraphsClient:
         
         # Merge both sets to get all unique players
         all_players = list(set(batters) | set(pitchers))
-        
-        return sorted(all_players) 
 
-
-# Function to extract player name from the HTML anchor tag
-# def extract_name(name_field):
-#     # Use regular expression to extract the text between the > and </a>
-#     return re.search(r'>(.*?)<', name_field).group(1)
-
-
-        @staticmethod
-        def fetch_past_30_days_for_team(team_id: int, season: int):
-            """Fetch the past 30 days of player stats for a specific team and season.
-                https://www.fangraphs.com/api/leaders/major-league/data?age=&pos=all&stats=pit&lg=all&qual=y&season=2025&season1=2025&startdate=2025-03-01&enddate=2025-11-01&month=3&hand=&team=6%2Cts&pageitems=30&pagenum=1&ind=0&rost=0&players=&type=8&postseason=&sortdir=default&sortstat=WAR
-            """
-            url = f"{FANGRAPHS_BASE_URL}?age=&pos=all&stats=bat&lg=all&qual=0&season={season}&season1={season}&hand=&team={team_id}&pageitems=30&pagenum=1&ind=0&rost=0&players=0&type=8&postseason=&sortdir=default&sortstat=WAR"
-            data = requests.get(url).json()
-            df = pd.DataFrame(data=data['data'])
-            return df
+        return sorted(all_players)
