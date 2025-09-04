@@ -15,6 +15,19 @@ def test_fangraphs_client_integration():
     # Add more integration tests here
 
 
+@pytest.mark.integration
+def test_fetch_team_players_integration():
+    team_id = 6  # Detroit Tigers
+    season=2024
+    result = FangraphsClient.fetch_team_players(team_id, season)
+
+    assert isinstance(result, list), "Expected a list as the result."
+    assert len(result) > 0, "Expected non-empty list for team players."
+
+    assert 'Tarik Skubal' in result, "Expected 'Tarik Skubal' to be in the team players."
+
+
+@pytest.mark.integration
 def test_fetch_player_stats_integration():
     """
     Integration test for FangraphsClient.fetch_player_stats.
@@ -45,7 +58,7 @@ def test_fetch_player_stats_integration():
     assert team_clean == 'DET', "Expected team to be 'DET'."
     assert result['Age'].iloc[0] == 27, "Expected age to be 27."
 
-
+@pytest.mark.integration
 def test_fetch_player_stats_multi_team_integration():
     """
     Integration test for a player who appeared for multiple teams in 2024; Team should be '---'.
