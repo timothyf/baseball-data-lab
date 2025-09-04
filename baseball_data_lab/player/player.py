@@ -2,7 +2,7 @@
 
 import logging
 from io import BytesIO
-from typing import Optional, Dict, Any
+from typing import Optional, Dict, Any, Tuple
 
 from PIL import Image
 import math
@@ -42,41 +42,67 @@ class Player:
         )
         self.lookup_client: PlayerLookup = PlayerLookup(data_client=self.data_client)
 
+    def _is_pitcher(self) -> bool:
+        """Return True if player's primary position is pitcher."""
+        return self.player_info.primary_position == "P"
+
+    def _fetch_stats(self, season: int) -> Tuple[Any, Any]:
+        """Fetch season stats and splits for the player."""
+        is_pitcher = self._is_pitcher()
+        stat_type = "pitching" if is_pitcher else "batting"
+        stats = self.data_client.fetch_player_stats(
+            mlbam_id=self.mlbam_id,
+            season=season,
+            stat_type=stat_type,
+        )
+        fetch_splits = (
+            self.data_client.fetch_pitching_splits
+            if is_pitcher
+            else self.data_client.fetch_batting_splits
+        )
+        splits = fetch_splits(self.mlbam_id, season=season)
+        return stats, splits
+
+    def _fetch_statcast(self, start_date: str, end_date: str) -> Any:
+        """Fetch Statcast data for the player."""
+        fetcher = (
+            self.data_client.fetch_statcast_pitcher_data
+            if self._is_pitcher()
+            else self.data_client.fetch_statcast_batter_data
+        )
+        return fetcher(self.mlbam_id, start_date, end_date)
+
+    def _save_statcast(self, year: int, name_slug: str) -> str:
+        """Save Statcast data to a CSV file and return its path."""
+        if self._is_pitcher():
+            file_path = (
+                f"{STATCAST_DATA_DIR}/{year}/statcast_data/{self.current_team.abbrev}/"
+                f"pitching/statcast_data_{name_slug}_{year}.csv"
+            )
+            self.data_client.save_statcast_pitcher_data(
+                self.mlbam_id, year, file_path
+            )
+        else:
+            file_path = (
+                f"{STATCAST_DATA_DIR}/{year}/statcast_data/{self.current_team.abbrev}/"
+                f"batting/statcast_data_{name_slug}_{year}.csv"
+            )
+            self.data_client.save_statcast_batter_data(
+                self.mlbam_id, year, file_path
+            )
+        return file_path
+
     def load_stats_for_season(self, season: int) -> None:
         """
         Fetches and sets the player's season statistics.
         """
-        if self.player_info.primary_position == "P":
-            self.player_stats = self.data_client.fetch_player_stats(
-                mlbam_id=self.mlbam_id,
-                season=season,
-                stat_type="pitching",
-            )
-            self.player_splits_stats = self.data_client.fetch_pitching_splits(
-                self.mlbam_id, season=season
-            )
-        else:
-            self.player_stats = self.data_client.fetch_player_stats(
-                mlbam_id=self.mlbam_id,
-                season=season,
-                stat_type="batting",
-            )
-            self.player_splits_stats = self.data_client.fetch_batting_splits(
-                self.mlbam_id, season=season
-            )
+        self.player_stats, self.player_splits_stats = self._fetch_stats(season)
 
     def load_statcast_data(self, start_date: str, end_date: str) -> None:
         """
         Fetches and sets the player's Statcast data.
         """
-        if self.player_info.primary_position == "P":
-            self.statcast_data = self.data_client.fetch_statcast_pitcher_data(
-                self.mlbam_id, start_date, end_date
-            )
-        else:
-            self.statcast_data = self.data_client.fetch_statcast_batter_data(
-                self.mlbam_id, start_date, end_date
-            )
+        self.statcast_data = self._fetch_statcast(start_date, end_date)
 
     @classmethod
     def create_from_mlb(
@@ -152,12 +178,7 @@ class Player:
         Saves the player's statcast data to a CSV file based on their position.
         """
         name_slug = self.player_bio.full_name.lower().replace(" ", "_")
-        if self.player_info.primary_position == "P":
-            file_path = f"{STATCAST_DATA_DIR}/{year}/statcast_data/{self.current_team.abbrev}/pitching/statcast_data_{name_slug}_{year}.csv"
-            self.data_client.save_statcast_pitcher_data(self.mlbam_id, year, file_path)
-        else:
-            file_path = f"{STATCAST_DATA_DIR}/{year}/statcast_data/{self.current_team.abbrev}/batting/statcast_data_{name_slug}_{year}.csv"
-            self.data_client.save_statcast_batter_data(self.mlbam_id, year, file_path)
+        file_path = self._save_statcast(year, name_slug)
         logger.info(f"Statcast data saved to {file_path}")
 
     def to_json(self) -> Dict[str, Any]:
