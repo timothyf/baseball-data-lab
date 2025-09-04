@@ -36,10 +36,10 @@ def fetch_and_save_leaderboards(season):
 
     try:
         data_client = UnifiedDataClient()
-        batting_data = data_client.fetch_batting_leaderboards_as_json(season)
+        batting_data = data_client.fetch_leaderboards(season, "batting", as_json=True)
         save_data_to_json(BATTING_FILE_PATH, batting_data)
 
-        pitching_data = data_client.fetch_pitching_leaderboards_as_json(season)
+        pitching_data = data_client.fetch_leaderboards(season, "pitching", as_json=True)
         save_data_to_json(PITCHING_FILE_PATH, pitching_data)
     except Exception as e:
         print(f"Error fetching leaderboard data for season {season}: {e}")
