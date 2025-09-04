@@ -1,5 +1,8 @@
 import json
+import json
+import json
 import numpy as np
+import pandas as pd
 import pytest
 from baseball_data_lab.utils import Utils
 
@@ -24,3 +27,17 @@ def test_ensure_directory_exists(tmp_path):
     file_path = tmp_path / 'a' / 'b' / 'file.txt'
     Utils.ensure_directory_exists(file_path)
     assert (tmp_path / 'a' / 'b').is_dir()
+
+
+def test_validate_statcast_df():
+    empty_df = pd.DataFrame()
+    assert Utils.validate_statcast_df(empty_df) is False
+
+    missing_cols_df = pd.DataFrame({'hc_x': [1]})
+    assert Utils.validate_statcast_df(missing_cols_df) is False
+
+    nan_df = pd.DataFrame({'hc_x': [None], 'hc_y': [None]})
+    assert Utils.validate_statcast_df(nan_df) is False
+
+    valid_df = pd.DataFrame({'hc_x': [10], 'hc_y': [20]})
+    assert Utils.validate_statcast_df(valid_df) is True
