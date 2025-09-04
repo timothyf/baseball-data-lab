@@ -66,23 +66,26 @@ class UnifiedDataClient:
             fangraphs_team_id=fangraphs_team_id,
         )
 
-    def fetch_batting_leaderboards(self, season: int) -> pd.DataFrame:
-        return FangraphsClient.fetch_batting_leaderboards(season)
+    def _fetch_leaderboards(
+        self, season: int, stat_type: str, as_json: bool = False
+    ):
+        """Internal helper to fetch Fangraphs leaderboards."""
+        if as_json:
+            if stat_type == "pitching":
+                return FangraphsClient.fetch_pitching_leaderboards_as_json(season)
+            if stat_type == "batting":
+                return FangraphsClient.fetch_batting_leaderboards_as_json(season)
+            raise ValueError("Invalid stat_type. Must be 'pitching' or 'batting'")
+        return FangraphsClient.fetch_leaderboards(season, stat_type)
 
-    def fetch_batting_leaderboards_as_json(self, season: int):
-        return FangraphsClient.fetch_batting_leaderboards_as_json(season)
-
-    def fetch_pitching_leaderboards(self, season: int) -> pd.DataFrame:
-        return FangraphsClient.fetch_pitching_leaderboards(season)
-
-    def fetch_pitching_leaderboards_as_json(self, season: int):
-        return FangraphsClient.fetch_pitching_leaderboards_as_json(season)
+    def fetch_leaderboards(
+        self, season: int, stat_type: str, as_json: bool = False
+    ):
+        """Fetch batting or pitching leaderboards."""
+        return self._fetch_leaderboards(season, stat_type, as_json=as_json)
 
     def fetch_team_players(self, team_id: int, season: int):
         return FangraphsClient.fetch_team_players(team_id, season)
-
-    def fetch_leaderboards(self, season: int, stat_type: str) -> pd.DataFrame:
-        return FangraphsClient.fetch_leaderboards(season, stat_type)
 
     #############################
     # MlbStatsClient wrappers
