@@ -185,6 +185,9 @@ class UnifiedDataClient:
             season, league_ids, team_id, group, stat_type, limit, offset, sort_order
         )
 
+    def get_situation_codes(self):
+        return MlbStatsClient.get_situation_codes()
+
     #############################
     # PybaseballClient wrappers
     #############################

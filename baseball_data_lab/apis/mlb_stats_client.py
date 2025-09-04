@@ -122,6 +122,17 @@ class MlbStatsClient:
         url = f"{STATS_API_BASE_URL}teams/{team_id}"
         data = MlbStatsClient._get_json(url)
         return data.get("teams", {})[0]
+    
+    @staticmethod
+    def get_situation_codes():
+        """Fetch the list of situation codes from the MLB Stats API.
+           These codes represent various game situations and can be used
+           when requesting player splits.
+
+           https://statsapi.mlb.com/api/v1/situationCodes  
+        """
+        url = f"{STATS_API_BASE_URL}situationCodes"
+        return MlbStatsClient._get_json(url)
 
     @staticmethod
     def fetch_batter_stat_splits(player_id: int, year: int):
