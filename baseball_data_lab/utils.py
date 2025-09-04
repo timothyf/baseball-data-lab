@@ -106,5 +106,23 @@ class Utils:
         # If format_spec is not a string, raise an error or handle appropriately
         raise TypeError(f"Invalid format_spec: {format_spec}. Expected a string or callable.")
 
+    @staticmethod
+    def validate_statcast_df(data):
+        """Validate Statcast dataframe for required hit coordinate data."""
+
+        if data is None or data.empty:
+            print("No valid data available for plotting.")
+            return False
+
+        if not {'hc_x', 'hc_y'}.issubset(data.columns):
+            print("Required columns 'hc_x' and 'hc_y' are missing.")
+            return False
+
+        if data[['hc_x', 'hc_y']].dropna(how='any').empty:
+            print("No valid rows with 'hc_x' and 'hc_y' available for plotting.")
+            return False
+
+        return True
+
 
 

@@ -4,6 +4,8 @@ from baseball_data_lab.player.player import Player
 from baseball_data_lab.stats.stats_display import StatsDisplay
 from baseball_data_lab.data_viz.batting_spray_chart import BattingSprayChart
 from baseball_data_lab.constants import statcast_events
+from baseball_data_lab.summary_sheets.base_sheet import BaseSheet
+from baseball_data_lab.utils import Utils
 from baseball_data_lab.summary_sheets.player_summary_sheet import PlayerSummarySheet
 
 
@@ -41,7 +43,7 @@ class BatterSummarySheet(PlayerSummarySheet):
         stats_display.plot_splits_stats(self.ax_splits_stats)
 
         spray_chart = BattingSprayChart(self.player.mlbam_id, statcast_events['batted_ball_events'])
-        if spray_chart.check_for_valid_data(self.player.statcast_data):
+        if Utils.validate_statcast_df(self.player.statcast_data):
             spray_chart.plot(self.ax_chart1, self.player.statcast_data, "Batted Balls")
         else:
             print("No valid data available for plotting batted ball events.")
@@ -49,7 +51,7 @@ class BatterSummarySheet(PlayerSummarySheet):
 
 
         spray_chart = BattingSprayChart(self.player.mlbam_id, statcast_events['hit_events'])
-        if spray_chart.check_for_valid_data(self.player.statcast_data):
+        if Utils.validate_statcast_df(self.player.statcast_data):
             spray_chart.plot(self.ax_chart2, self.player.statcast_data, "Hits")
         else:
             print("No valid data available for plotting hit events.")
