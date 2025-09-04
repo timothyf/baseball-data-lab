@@ -58,14 +58,41 @@ class SeasonStatsDownloader:
             self.team_ids = self.get_team_ids_by_league(league)
         else:
             self.team_ids = [
-                109,144,110,111,112,145,113,114,115,116,
-                117,118,108,119,146,158,142,121,147,133,
-                143,134,135,137,136,138,139,140,141,120
+                109,
+                144,
+                110,
+                111,
+                112,
+                145,
+                113,
+                114,
+                115,
+                116,
+                117,
+                118,
+                108,
+                119,
+                146,
+                158,
+                142,
+                121,
+                147,
+                133,
+                143,
+                134,
+                135,
+                137,
+                136,
+                138,
+                139,
+                140,
+                141,
+                120,
             ]
 
-        self.max_workers    = max_workers
+        self.max_workers = max_workers
         self.retry_attempts = retry_attempts
-        self.chunk_size     = chunk_size
+        self.chunk_size = chunk_size
 
         self.statuses: Dict[str, List[str]] = {
             "success": [],
@@ -168,7 +195,7 @@ class SeasonStatsDownloader:
 
     @staticmethod
     def _build_player_tasks(
-        teams_and_rosters: List[Tuple[int, pd.DataFrame]]
+        teams_and_rosters: List[Tuple[int, pd.DataFrame]],
     ) -> List[int]:
         """Return a de-duplicated list of player IDs from the supplied rosters."""
         ids = {
@@ -178,9 +205,7 @@ class SeasonStatsDownloader:
         }
         return list(ids)
 
-    def _combine_and_clean_dfs(
-        self, dfs: List[pd.DataFrame]
-    ) -> Optional[pd.DataFrame]:
+    def _combine_and_clean_dfs(self, dfs: List[pd.DataFrame]) -> Optional[pd.DataFrame]:
         """Drop empty columns, concatenate, and sanitize text columns."""
         valid = [df for df in dfs if not df.empty]
         cleaned = [df.dropna(axis=1, how="all") for df in valid]
@@ -189,7 +214,6 @@ class SeasonStatsDownloader:
 
         combined = pd.concat(cleaned, ignore_index=True, sort=False)
         return self._sanitize_text_df(combined)
-
 
     def download(self, *, output_file: Optional[str] = None) -> None:
         """Main entry point to download and persist season stats."""
@@ -220,8 +244,6 @@ class SeasonStatsDownloader:
 
         self._print_summary(output_file)
 
-
-
     def _fetch_player_stats(
         self,
         mlbam_id: int,
@@ -237,26 +259,24 @@ class SeasonStatsDownloader:
         for attempt in range(1, self.retry_attempts + 1):
             try:
                 player = Player.create_from_mlb(
-                    mlbam_id=mlbam_id,
-                    data_client=self.client
+                    mlbam_id=mlbam_id, data_client=self.client
                 )
                 if not player:
                     raise PlayerNotFoundError(f"No player for id {mlbam_id}")
-                safe_name = getattr(getattr(player, "player_bio", None), "full_name", safe_name)
+                safe_name = getattr(
+                    getattr(player, "player_bio", None), "full_name", safe_name
+                )
 
                 pos = player.player_info.primary_position
                 if self.player_type == "pitchers" and pos != "P":
                     raise PositionMismatchError(f"{mlbam_id} is not a pitcher")
                 if self.player_type == "batters" and pos == "P":
-                    raise PositionMismatchError(f"{mlbam_id} is a pitcher, not a batter")
+                    raise PositionMismatchError(
+                        f"{mlbam_id} is a pitcher, not a batter"
+                    )
 
-                fetch_fn = (
-                    self.client.fetch_pitching_stats
-                    if pos == "P"
-                    else self.client.fetch_batting_stats
-                )
-
-                group = "pitching" if pos == "P" else "batting"
+                stat_type = "pitching" if pos == "P" else "batting"
+                group = stat_type
                 team_ids = self.client.get_player_teams_for_season(
                     mlbam_id, self.season, group=group, ids_only=True
                 )
@@ -265,10 +285,13 @@ class SeasonStatsDownloader:
 
                 team_dfs: List[pd.DataFrame] = []
                 for team_id in team_ids:
-                    fg_id = self.team_id_map.get(team_id) if team_id is not None else None
-                    stats = fetch_fn(
+                    fg_id = (
+                        self.team_id_map.get(team_id) if team_id is not None else None
+                    )
+                    stats = self.client.fetch_player_stats(
                         mlbam_id=mlbam_id,
                         season=self.season,
+                        stat_type=stat_type,
                         fangraphs_team_id=fg_id,
                     )
                     # Drop columns with no data and skip entirely empty or all-NA frames
@@ -324,8 +347,8 @@ class SeasonStatsDownloader:
             index=False,
             quoting=csv.QUOTE_MINIMAL,
             quotechar='"',
-            escapechar='\\',
-            lineterminator='\n',
+            escapechar="\\",
+            lineterminator="\n",
         )
         logger.debug(f"Wrote {len(combined)} rows to {filename}")
 
@@ -340,11 +363,10 @@ class SeasonStatsDownloader:
             index=False,
             quoting=csv.QUOTE_MINIMAL,
             quotechar='"',
-            escapechar='\\',
-            lineterminator='\n',
+            escapechar="\\",
+            lineterminator="\n",
         )
         logger.debug(f"Wrote {len(combined)} rows to {filename}")
-
 
     def _print_summary(self, filename: str) -> None:
         total = sum(len(lst) for lst in self.statuses.values())
