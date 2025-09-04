@@ -1,6 +1,5 @@
 # Standard library imports
 import matplotlib.pyplot as plt
-import pandas as pd
 
 # Application-specific imports
 from baseball_data_lab.config.stats import StatsConfig
@@ -16,39 +15,13 @@ class StatsDisplay:
 
 
     def display_standard_stats(self, ax: plt.Axes):
-        data=self.player.player_stats
-        stat_type='standard'
-        title='Standard'
+        """Display standard statistics for the player."""
+        self._display_stats(ax, "standard", "Standard")
 
-        if data is None:
-            print(f"No {stat_type} stats data available.")
-            return
-
-        stats_df = data #pd.DataFrame([data])
-        filtered_data = self._filter_columns(self.season_stats[stat_type], stats_df)
-        if filtered_data is None or filtered_data.empty:
-            print(f"No valid {stat_type} stats available for plotting.")
-            return
-
-        self._plot_stats_table(filtered_data, self.season_stats[stat_type], ax, title, is_splits=False)
- 
 
     def display_advanced_stats(self, ax: plt.Axes):
-        data = self.player.player_stats
-        stat_type='advanced'
-        title='Advanced'
-
-        if data is None:
-            print(f"No {stat_type} stats data available.")
-            return
-
-        stats_df = data #pd.DataFrame([data])
-        filtered_data = self._filter_columns(self.season_stats[stat_type], stats_df)
-        if filtered_data is None or filtered_data.empty:
-            print(f"No valid {stat_type} stats available for plotting.")
-            return
-
-        self._plot_stats_table(filtered_data, self.season_stats[stat_type], ax, title, is_splits=False)
+        """Display advanced statistics for the player."""
+        self._display_stats(ax, "advanced", "Advanced")
 
 
     def plot_splits_stats(self, ax: plt.Axes):
@@ -81,6 +54,24 @@ class StatsDisplay:
     #     return self._filter_columns(self.season_stats, stats_df)
 
     
+
+    def _display_stats(self, ax: plt.Axes, stat_type: str, title: str):
+        """Common workflow for displaying season statistics."""
+        data = self.player.player_stats
+
+        if data is None:
+            print(f"No {stat_type} stats data available.")
+            return
+
+        stats_df = data
+        filtered_data = self._filter_columns(self.season_stats[stat_type], stats_df)
+
+        if filtered_data is None or filtered_data.empty:
+            print(f"No valid {stat_type} stats available for plotting.")
+            return
+
+        self._plot_stats_table(filtered_data, self.season_stats[stat_type], ax, title, is_splits=False)
+
 
     def _plot_stats_table(self, stats, stat_fields, ax, title=None, is_splits=False):
         stats_table = StatsTable(stats, stat_fields, self.stat_type)
