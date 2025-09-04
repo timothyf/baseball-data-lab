@@ -10,17 +10,14 @@ from baseball_data_lab.data_viz.pitch_break_plot import PitchBreakPlot
 from baseball_data_lab.data_viz.pitch_breakdown_table import PitchBreakdownTable
 from baseball_data_lab.constants import swing_code, whiff_code
 from baseball_data_lab.config.paths import DATA_DIR
-from baseball_data_lab.summary_sheets.base_sheet import BaseSheet
+from baseball_data_lab.summary_sheets.player_summary_sheet import PlayerSummarySheet
 from baseball_data_lab.apis.local_data_client import LocalDataClient
 
 
-class PitcherSummarySheet(BaseSheet):
+class PitcherSummarySheet(PlayerSummarySheet):
 
     def __init__(self, player: Player, season: int):
-        super().__init__(season)
-        self.player = player
-        self.player.load_stats_for_season(season)
-        self.player.load_statcast_data(self.start_date, self.end_date)
+        super().__init__(player, season)
         self.league_pitch_averages = self.local_data_client.get_statcast_league_pitching(season)
         self.columns_count = 8
         self.rows_count = 10
