@@ -12,7 +12,7 @@ def test_get_team_ids_by_league(tmp_path, monkeypatch):
     teams = [
         {"mlbam_team_id": 1, "league": "AL"},
         {"mlbam_team_id": 2, "league": "NL"},
-        {"mlbam_team_id": 3, "league": "AL"}
+        {"mlbam_team_id": 3, "league": "AL"},
     ]
     (data_dir / "mlb_teams.json").write_text(json.dumps(teams))
     monkeypatch.setattr(save_season_stats, "DATA_DIR", str(data_dir))
@@ -37,11 +37,8 @@ class DummyClient:
         self.pitch_df = pd.DataFrame({"wins": [1]})
         self.bat_df = pd.DataFrame({"hits": [5]})
 
-    def fetch_pitching_stats(self, mlbam_id, season, fangraphs_team_id=None):
-        return self.pitch_df
-
-    def fetch_batting_stats(self, mlbam_id, season, fangraphs_team_id=None):
-        return self.bat_df
+    def fetch_player_stats(self, mlbam_id, season, stat_type, fangraphs_team_id=None):
+        return self.pitch_df if stat_type == "pitching" else self.bat_df
 
     def get_player_teams_for_season(self, player_id, year, group=None, ids_only=False):
         return [109]
@@ -66,7 +63,11 @@ def test_fetch_player_stats_success(monkeypatch, tmp_path):
     client = DummyClient()
     downloader = SeasonStatsDownloader(season=2024, output_dir=str(tmp_path))
     downloader.client = client
-    monkeypatch.setattr(save_season_stats.Player, "create_from_mlb", lambda mlbam_id, data_client=None: DummyPlayer("P"))
+    monkeypatch.setattr(
+        save_season_stats.Player,
+        "create_from_mlb",
+        lambda mlbam_id, data_client=None: DummyPlayer("P"),
+    )
     df = downloader._fetch_player_stats(1)
     assert isinstance(df, pd.DataFrame)
     assert df["mlbam_id"].iloc[0] == 1
@@ -76,9 +77,15 @@ def test_fetch_player_stats_success(monkeypatch, tmp_path):
 
 def test_fetch_player_stats_position_mismatch(monkeypatch, tmp_path):
     client = DummyClient()
-    downloader = SeasonStatsDownloader(season=2024, output_dir=str(tmp_path), player_type="batters")
+    downloader = SeasonStatsDownloader(
+        season=2024, output_dir=str(tmp_path), player_type="batters"
+    )
     downloader.client = client
-    monkeypatch.setattr(save_season_stats.Player, "create_from_mlb", lambda mlbam_id, data_client=None: DummyPlayer("P"))
+    monkeypatch.setattr(
+        save_season_stats.Player,
+        "create_from_mlb",
+        lambda mlbam_id, data_client=None: DummyPlayer("P"),
+    )
     result = downloader._fetch_player_stats(2)
     assert result is None
     assert downloader.statuses["position_mismatch"] == ["Dummy Player"]
