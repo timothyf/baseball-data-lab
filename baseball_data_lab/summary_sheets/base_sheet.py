@@ -56,7 +56,7 @@ class BaseSheet:
                 Plotting.plot_bio(self.ax_bio, self.player, "Season Batting Summary", self.season)
             Plotting.plot_image(
                 self.ax_logo,
-                self.player.current_team.get_team_logo(self.player.current_team.abbrev),
+                self.player.current_team.get_logo(),
             )
         elif hasattr(self, "team"):
             Plotting.plot_team_info(
