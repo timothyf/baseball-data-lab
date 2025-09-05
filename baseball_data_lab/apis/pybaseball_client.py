@@ -77,7 +77,7 @@ class PybaseballClient:
 
     @staticmethod
     def save_statcast_batter_data(player_id: int, year: int, file_path: str = None):
-        season_info = MlbStatsClient.get_season_info(year)
+        season_info = MlbStatsClient.fetch_season_info(year)
         start_date = season_info['regularSeasonStartDate']
         end_date = season_info['regularSeasonEndDate']
         statcast_data = pyb.statcast_batter(start_date, end_date, player_id)
@@ -96,7 +96,7 @@ class PybaseballClient:
     
     @staticmethod
     def save_statcast_pitcher_data(player_id: int, year: int, file_path: str = None):
-        season_info = MlbStatsClient.get_season_info(year)
+        season_info = MlbStatsClient.fetch_season_info(year)
         start_date = season_info['regularSeasonStartDate']
         end_date = season_info['regularSeasonEndDate']
         statcast_data = pyb.statcast_pitcher(start_date, end_date, player_id)

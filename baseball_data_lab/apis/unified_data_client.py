@@ -107,11 +107,11 @@ class UnifiedDataClient:
     def fetch_full_season_roster(self, team_id: int, year: int = 2024):
         return MlbStatsClient.fetch_full_season_roster(team_id, year)
 
-    def get_season_info(self, year: int):
-        return MlbStatsClient.get_season_info(year)
+    def fetch_season_info(self, year: int):
+        return MlbStatsClient.fetch_season_info(year)
 
-    def get_team_id(self, team_name: str):
-        return MlbStatsClient.get_team_id(team_name)
+    def fetch_team_id(self, team_name: str):
+        return MlbStatsClient.fetch_team_id(team_name)
 
     def fetch_player_info(self, player_id: int):
         return MlbStatsClient.fetch_player_info(player_id)
@@ -125,55 +125,55 @@ class UnifiedDataClient:
     def fetch_player_team_stats(self, player_id: int, year: int):
         return MlbStatsClient.fetch_player_team_stats(player_id, year)
 
-    def get_player_teams_for_season(
+    def fetch_player_teams_for_season(
         self, player_id: int, year: int, group: str = None, ids_only: bool = False
     ):
-        return MlbStatsClient.get_player_teams_for_season(
+        return MlbStatsClient.fetch_player_teams_for_season(
             player_id, year, group=group, ids_only=ids_only
         )
 
-    def get_player_gamelog(self, player_id: int, stat_type: str, season: int):
-        return MlbStatsClient.get_player_gamelog(player_id, stat_type, season)
+    def fetch_player_gamelog(self, player_id: int, stat_type: str, season: int):
+        return MlbStatsClient.fetch_player_gamelog(player_id, stat_type, season)
 
     def fetch_player_team(self, player_id: int, year: int):
         return MlbStatsClient.fetch_player_team(player_id, year)
 
-    def get_player_mlbam_id(self, player_id: int):
-        return MlbStatsClient.get_player_mlbam_id(player_id)
+    def fetch_player_mlbam_id(self, player_id: int):
+        return MlbStatsClient.fetch_player_mlbam_id(player_id)
 
-    def get_standings_data(self, season: int, league_ids: str) -> pd.DataFrame:
-        return MlbStatsClient.get_standings_data(season, league_ids)
+    def fetch_standings_data(self, season: int, league_ids: str) -> pd.DataFrame:
+        return MlbStatsClient.fetch_standings_data(season, league_ids)
 
-    def get_team_record_for_season(self, season: int, team_id: int) -> pd.DataFrame:
-        return MlbStatsClient.get_team_record_for_season(season, team_id)
+    def fetch_team_record_for_season(self, season: int, team_id: int) -> pd.DataFrame:
+        return MlbStatsClient.fetch_team_record_for_season(season, team_id)
 
-    def get_schedule_for_date_range(
+    def fetch_schedule_for_date_range(
         self, start_date: str, end_date: str
     ) -> pd.DataFrame:
-        return MlbStatsClient.get_schedule_for_date_range(start_date, end_date)
+        return MlbStatsClient.fetch_schedule_for_date_range(start_date, end_date)
 
-    def get_team_logo_url(self, mlbam_team_id: int) -> str:
-        return MlbStatsClient.get_team_logo_url(mlbam_team_id)
+    def fetch_team_logo_url(self, mlbam_team_id: int) -> str:
+        return MlbStatsClient.fetch_team_logo_url(mlbam_team_id)
 
-    def get_team_spot_url(self, mlbam_team_id: int, size: int) -> str:
-        return MlbStatsClient.get_team_spot_url(mlbam_team_id, size)
+    def fetch_team_spot_url(self, mlbam_team_id: int, size: int) -> str:
+        return MlbStatsClient.fetch_team_spot_url(mlbam_team_id, size)
 
-    def get_game_data(self, game_pk: int) -> pd.DataFrame:
-        return MlbStatsClient.get_game_data(game_pk)
+    def fetch_game_data(self, game_pk: int) -> pd.DataFrame:
+        return MlbStatsClient.fetch_game_data(game_pk)
 
-    def get_game_live_feed(self, game_pk: int) -> pd.DataFrame:
-        return MlbStatsClient.get_game_live_feed(game_pk)
+    def fetch_game_live_feed(self, game_pk: int) -> pd.DataFrame:
+        return MlbStatsClient.fetch_game_live_feed(game_pk)
 
-    def get_recent_schedule_for_team(self, team_id: int) -> pd.DataFrame:
-        return MlbStatsClient.get_recent_schedule_for_team(team_id)
+    def fetch_recent_schedule_for_team(self, team_id: int) -> pd.DataFrame:
+        return MlbStatsClient.fetch_recent_schedule_for_team(team_id)
 
-    def get_game_boxscore_data(game_pk: int) -> pd.DataFrame:
-        return MlbStatsClient.get_game_boxscore_data(game_pk)
+    def fetch_game_boxscore_data(game_pk: int) -> pd.DataFrame:
+        return MlbStatsClient.fetch_game_boxscore_data(game_pk)
 
     def fetch_player_stats_career(self, player_id: int):
         return MlbStatsClient.fetch_player_stats_career(player_id)
 
-    def get_leaderboard_data(
+    def fetch_leaderboard_data(
         self,
         season: int,
         league_ids: str,
@@ -184,12 +184,12 @@ class UnifiedDataClient:
         offset: int,
         sort_order: str,
     ) -> pd.DataFrame:
-        return MlbStatsClient.get_leaderboard_data(
+        return MlbStatsClient.fetch_leaderboard_data(
             season, league_ids, team_id, group, stat_type, limit, offset, sort_order
         )
 
-    def get_situation_codes(self):
-        return MlbStatsClient.get_situation_codes()
+    def fetch_situation_codes(self):
+        return MlbStatsClient.fetch_situation_codes()
 
     #############################
     # PybaseballClient wrappers

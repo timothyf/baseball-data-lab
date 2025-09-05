@@ -124,7 +124,7 @@ class MlbStatsClient:
         return data.get("teams", {})[0]
     
     @staticmethod
-    def get_situation_codes():
+    def fetch_situation_codes():
         """Fetch the list of situation codes from the MLB Stats API.
            These codes represent various game situations and can be used
            when requesting player splits.
@@ -336,7 +336,7 @@ class MlbStatsClient:
     # ids = MlbStatsClient.get_player_teams_for_season(656427, 2024, ids_only=True)
     # # e.g. [116, 119]
     @staticmethod
-    def get_player_teams_for_season(
+    def fetch_player_teams_for_season(
         player_id: int,
         year: int,
         *,
@@ -470,7 +470,7 @@ class MlbStatsClient:
         return data["roster"]
 
     @staticmethod
-    def get_team_id(team_name):
+    def fetch_team_id(team_name):
         teams = statsapi.lookup_team(team_name)
         if teams:
             return teams[0]['id']
@@ -478,7 +478,7 @@ class MlbStatsClient:
             raise ValueError(f"Team '{team_name}' not found.")
     
     @staticmethod
-    def get_player_mlbam_id(player_name):
+    def fetch_player_mlbam_id(player_name):
         # Search for the player using the player's name
         search_results = statsapi.lookup_player(player_name)
         
@@ -495,7 +495,7 @@ class MlbStatsClient:
             return None
 
     @staticmethod
-    def get_season_info(year: int) -> Dict[str, Any]:
+    def fetch_season_info(year: int) -> Dict[str, Any]:
         """Return season metadata for the given year.
 
         Parameters
@@ -512,7 +512,7 @@ class MlbStatsClient:
     
 
     @staticmethod
-    def get_standings_data(season: int, league_ids: str) -> pd.DataFrame:
+    def fetch_standings_data(season: int, league_ids: str) -> pd.DataFrame:
         """Return the standings data for a given season."""
         """ AL ID = 103, NL ID = 104
             https://statsapi.mlb.com/api/v1/standings?leagueId=103,104&season=2025&standingsTypes=regularSeason
@@ -523,7 +523,7 @@ class MlbStatsClient:
 
     # https://statsapi.mlb.com/api/v1/teams?&teamId=116&season=2024&hydrate=standings
     @staticmethod
-    def get_team_record_for_season(season: int, team_id: int) -> pd.DataFrame:
+    def fetch_team_record_for_season(season: int, team_id: int) -> pd.DataFrame:
         """Return the team record for a given season."""
         url = f"{STATS_API_BASE_URL}teams/?teamId={team_id}&season={season}&hydrate=standings"
         data = MlbStatsClient._get_json(url)
@@ -532,7 +532,7 @@ class MlbStatsClient:
     
     # https://statsapi.mlb.com/api/v1/schedule?sportId=1&startDate=2025-08-16&endDate=2025-08-18
     @staticmethod
-    def get_schedule_for_date_range(start_date: str, end_date: str) -> pd.DataFrame:
+    def fetch_schedule_for_date_range(start_date: str, end_date: str) -> pd.DataFrame:
         """Return the schedule for a given date range."""
         url = f"{STATS_API_BASE_URL}schedule?sportId=1&startDate={start_date}&endDate={end_date}&hydrate=probablePitcher,decisions,team"
         data = MlbStatsClient._get_json(url)
@@ -540,26 +540,26 @@ class MlbStatsClient:
     
     # https://www.mlbstatic.com/team-logos/team-cap-on-light/109.svg
     @staticmethod
-    def get_team_logo_url(mlbam_team_id: int) -> str:
+    def fetch_team_logo_url(mlbam_team_id: int) -> str:
         """Return the URL for the team's logo."""
         return f"https://www.mlbstatic.com/team-logos/team-cap-on-light/{mlbam_team_id}.svg"
 
     # https://midfield.mlbstatic.com/v1/team/158/spots/128
     @staticmethod
-    def get_team_spot_url(mlbam_team_id: int, size: int) -> str:
+    def fetch_team_spot_url(mlbam_team_id: int, size: int) -> str:
         """Return the URL for a specific spot on the team's cap."""
         return f"https://midfield.mlbstatic.com/v1/team/{mlbam_team_id}/spots/{size}"
 
     # https://baseballsavant.mlb.com/gf?game_pk=776673
     @staticmethod
-    def get_game_data(game_pk: int) -> pd.DataFrame:
+    def fetch_game_data(game_pk: int) -> pd.DataFrame:
         """Return the game data for a given game ID."""
         url = f"{SAVANT_BASE_URL}gf?game_pk={game_pk}"
         data = MlbStatsClient._get_json(url)
         return data
 
     @staticmethod
-    def get_game_live_feed(game_pk: int) -> pd.DataFrame:
+    def fetch_game_live_feed(game_pk: int) -> pd.DataFrame:
         """Return the live feed data for a given game ID.
             https://ws.statsapi.mlb.com/api/v1.1/game/776573/feed/live?language=en
         """
@@ -568,7 +568,7 @@ class MlbStatsClient:
         return data
     
     @staticmethod
-    def get_player_gamelog(player_id: int, stat_type: str,  season: int) -> pd.DataFrame:
+    def fetch_player_gamelog(player_id: int, stat_type: str,  season: int) -> pd.DataFrame:
         """Return the game log data for a given player ID and season.
             stat_type = hitting, pitching, or fielding
             # Hitting Example
@@ -581,7 +581,7 @@ class MlbStatsClient:
         return data
 
     @staticmethod
-    def get_game_boxscore_data(game_pk: int) -> pd.DataFrame:
+    def fetch_game_boxscore_data(game_pk: int) -> pd.DataFrame:
         """Return the game boxscore data for a given game ID.
             http://statsapi.mlb.com/api/v1/game/776673/boxscore
         """
@@ -590,7 +590,7 @@ class MlbStatsClient:
         return data
     
     @staticmethod
-    def get_leaderboard_data(season: int, league_ids: str, team_id: str, group: str, stat_type: str,
+    def fetch_leaderboard_data(season: int, league_ids: str, team_id: str, group: str, stat_type: str,
                              limit: int, offset: int, sort_order: str) -> pd.DataFrame:
         """Return the leaderboard data for a given season and stat type.
             Batting:
@@ -613,7 +613,7 @@ class MlbStatsClient:
         return data
 
     @staticmethod
-    def get_team_stats_for_date_range(team_id: int, start_date: str, end_date: str) -> pd.DataFrame:
+    def fetch_team_stats_for_date_range(team_id: int, start_date: str, end_date: str) -> pd.DataFrame:
         """Fetch the team stats for a specific date range.
             https://statsapi.mlb.com/api/v1/teams/116/stats?season=2025&startDate=2025-03-01&endDate=2025-11-01
 
@@ -625,7 +625,7 @@ class MlbStatsClient:
         return data
 
     @staticmethod
-    def get_recent_schedule_for_team(team_id: int) -> Dict[str, Any]:
+    def fetch_recent_schedule_for_team(team_id: int) -> Dict[str, Any]:
         """Fetch the recent schedule (previous and next games) for a specific team.
             https://statsapi.mlb.com/api/v1/teams?teamId=116&season=2025&hydrate=previousSchedule,nextSchedule
 

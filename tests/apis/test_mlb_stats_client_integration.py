@@ -205,11 +205,11 @@ def test_fetch_player_stats_by_season_integration():
         # So we just ensure dict-ness and leave content checks to unit tests against fixtures. 
 
 
-"""Integration test for MlbStatsClient.get_player_teams_for_season against live API."""
+"""Integration test for MlbStatsClient.fetch_player_teams_for_season against live API."""
 @pytest.mark.integration
-def test_get_player_teams_for_season_integration():
+def test_fetch_player_teams_for_season_integration():
     # Likely single-team season
-    trout_2019 = MlbStatsClient.get_player_teams_for_season(545361, 2019)  # Mike Trout
+    trout_2019 = MlbStatsClient.fetch_player_teams_for_season(545361, 2019)  # Mike Trout
     assert isinstance(trout_2019, list)
     assert len(trout_2019) >= 1
     assert all(
@@ -218,7 +218,7 @@ def test_get_player_teams_for_season_integration():
     ), "Each team entry should have teamId and teamName"
 
     # Known multi-team season (trade year)
-    flaherty_2024_ids = MlbStatsClient.get_player_teams_for_season(656427, 2024, ids_only=True)
+    flaherty_2024_ids = MlbStatsClient.fetch_player_teams_for_season(656427, 2024, ids_only=True)
     assert isinstance(flaherty_2024_ids, list)
     assert len(flaherty_2024_ids) >= 2, "Expected multi-team season for 2024"
     assert all(isinstance(tid, (int, str)) for tid in flaherty_2024_ids)
@@ -377,12 +377,12 @@ def test_fetch_player_stats_career_integration():
     assert len(stats) > 0, "Expected player stats list to have at least one entry."
 
 @pytest.mark.integration
-def test_get_standings_data_integration():
-    """Integration test for mlb_stats_client.get_standings_data."""
+def test_fetch_standings_data_integration():
+    """Integration test for mlb_stats_client.fetch_standings_data."""
     season = 2024
     leagues = "103,104"
 
-    records = MlbStatsClient.get_standings_data(season, leagues)
+    records = MlbStatsClient.fetch_standings_data(season, leagues)
 
     # Basic structure checks
     assert isinstance(records, list), "Expected standings records to be a list"
@@ -409,22 +409,22 @@ def test_get_standings_data_integration():
 
 
 @pytest.mark.integration
-def test_get_team_record_for_season_integration():
-    """Integration test for MlbStatsClient.get_team_record_for_season."""
+def test_fetch_team_record_for_season_integration():
+    """Integration test for MlbStatsClient.fetch_team_record_for_season."""
     season = 2024
     team_id = 116  # Detroit Tigers
-    record = MlbStatsClient.get_team_record_for_season(season, team_id)
+    record = MlbStatsClient.fetch_team_record_for_season(season, team_id)
     assert record is not None, "Expected non-None team record."
     assert int(record['season']) == season, f"Expected season {season}, got {record['season']}"
 
 
 @pytest.mark.integration
-def test_get_schedule_for_date_range_integration():
-    """Integration test for MlbStatsClient.get_schedule_for_date_range."""
+def test_fetch_schedule_for_date_range_integration():
+    """Integration test for MlbStatsClient.fetch_schedule_for_date_range."""
     start_date = "2024-06-01"
     end_date = "2024-06-02"
 
-    schedule = MlbStatsClient.get_schedule_for_date_range(start_date, end_date)
+    schedule = MlbStatsClient.fetch_schedule_for_date_range(start_date, end_date)
 
     # Basic structure checks
     assert isinstance(schedule, list), "Expected schedule to be a list of dates"
@@ -455,15 +455,15 @@ def test_fetch_full_season_roster_integration():
 
 
 @pytest.mark.integration
-def test_get_team_id_integration():
+def test_fetch_team_id_integration():
     pass
 
 
 @pytest.mark.integration
-def test_get_player_mlbam_id_integration():
+def test_fetch_player_mlbam_id_integration():
     pass
 
 
 @pytest.mark.integration
-def test_get_season_info_integration():
+def test_fetch_season_info_integration():
     pass

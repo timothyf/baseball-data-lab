@@ -155,49 +155,49 @@ def test_fetch_full_season_roster(monkeypatch):
     assert result[0]["person"]["fullName"] == "Player A"
 
 # ---------------------------
-# Test get_team_id
+# Test fetch_team_id
 # ---------------------------
-def test_get_team_id(monkeypatch):
+def test_fetch_team_id(monkeypatch):
     fake_lookup = [{"id": 200, "name": "Test Team"}]
     monkeypatch.setattr(statsapi, "lookup_team", lambda team_name: fake_lookup)
     
-    result = MlbStatsClient.get_team_id("Test Team")
+    result = MlbStatsClient.fetch_team_id("Test Team")
     assert result == 200
 
-def test_get_team_id_not_found(monkeypatch):
+def test_fetch_team_id_not_found(monkeypatch):
     monkeypatch.setattr(statsapi, "lookup_team", lambda team_name: [])
     with pytest.raises(ValueError):
-        MlbStatsClient.get_team_id("Nonexistent Team")
+        MlbStatsClient.fetch_team_id("Nonexistent Team")
 
 # ---------------------------
-# Test get_player_mlbam_id
+# Test fetch_player_mlbam_id
 # ---------------------------
-def test_get_player_mlbam_id(monkeypatch, capsys):
+def test_fetch_player_mlbam_id(monkeypatch, capsys):
     fake_lookup = [{"id": 300, "fullName": "Test Player"}]
     monkeypatch.setattr(statsapi, "lookup_player", lambda player_name: fake_lookup)
     
-    result = MlbStatsClient.get_player_mlbam_id("Test Player")
+    result = MlbStatsClient.fetch_player_mlbam_id("Test Player")
     captured = capsys.readouterr().out
     assert "Player Name: Test Player, MLBAM ID: 300" in captured
     assert result == 300
 
-def test_get_player_mlbam_id_not_found(monkeypatch, capsys):
+def test_fetch_player_mlbam_id_not_found(monkeypatch, capsys):
     monkeypatch.setattr(statsapi, "lookup_player", lambda player_name: [])
     
-    result = MlbStatsClient.get_player_mlbam_id("Unknown Player")
+    result = MlbStatsClient.fetch_player_mlbam_id("Unknown Player")
     captured = capsys.readouterr().out
     assert "No player found for name: Unknown Player" in captured
     assert result is None
 
 # ---------------------------
-# Test get_season_info
+# Test fetch_season_info
 # ---------------------------
-# def test_get_season_info(monkeypatch):
+# def test_fetch_season_info(monkeypatch):
 #     def fake_statsapi_get(endpoint, params):
 #         return {"seasons": [{"seasonId": params["seasonId"], "startDate": "2024-03-28", "endDate": "2024-10-01"}]}
 #     monkeypatch.setattr(statsapi, "get", fake_statsapi_get)
     
-#     result = MlbStatsClient.get_season_info(2024)
+#     result = MlbStatsClient.fetch_season_info(2024)
 #     assert result["seasonId"] == 2024
 #     assert result["startDate"] == "2024-03-28"
 #     assert result["endDate"] == "2024-10-01"

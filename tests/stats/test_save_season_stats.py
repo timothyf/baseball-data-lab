@@ -40,7 +40,7 @@ class DummyClient:
     def fetch_player_stats(self, mlbam_id, season, stat_type, fangraphs_team_id=None):
         return self.pitch_df if stat_type == "pitching" else self.bat_df
 
-    def get_player_teams_for_season(self, player_id, year, group=None, ids_only=False):
+    def fetch_player_teams_for_season(self, player_id, year, group=None, ids_only=False):
         return [109]
 
 
@@ -69,6 +69,11 @@ def test_fetch_player_stats_success(monkeypatch, tmp_path):
         lambda mlbam_id, data_client=None: DummyPlayer("P"),
     )
     df = downloader._fetch_player_stats(1)
+    print("downloader.statuses:", downloader.statuses)
+    if downloader.statuses["error"]:
+        print("Error:", downloader.statuses["error"][0])
+
+    assert df is not None, "Expected season stats to be not None"
     assert isinstance(df, pd.DataFrame)
     assert df["mlbam_id"].iloc[0] == 1
     assert df["season"].iloc[0] == 2024

@@ -277,7 +277,7 @@ class SeasonStatsDownloader:
 
                 stat_type = "pitching" if pos == "P" else "batting"
                 group = stat_type
-                team_ids = self.client.get_player_teams_for_season(
+                team_ids = self.client.fetch_player_teams_for_season(
                     mlbam_id, self.season, group=group, ids_only=True
                 )
                 if not team_ids:
