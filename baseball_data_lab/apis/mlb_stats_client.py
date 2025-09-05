@@ -565,6 +565,15 @@ class MlbStatsClient:
         url = f"https://ws.statsapi.mlb.com/api/v1.1/game/{game_pk}/feed/live?language=en"
         data = MlbStatsClient._get_json(url)
         return data
+
+    @staticmethod
+    def fetch_active_players(season: int) -> pd.DataFrame:
+        """Return the list of active players.
+            https://statsapi.mlb.com/api/v1/sports/1/players?fields=people,fullName,lastName,nameSlug&season=2025
+        """
+        url = f"{STATS_API_BASE_URL}sports/1/players?fields=people,fullName,lastName,nameSlug&season={season}"
+        data = MlbStatsClient._get_json(url)
+        return data["people"]
     
     @staticmethod
     def fetch_player_gamelog(player_id: int, stat_type: str,  season: int) -> pd.DataFrame:

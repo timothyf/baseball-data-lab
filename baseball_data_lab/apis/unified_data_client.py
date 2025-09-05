@@ -176,6 +176,9 @@ class UnifiedDataClient:
     def fetch_game_boxscore_data(game_pk: int) -> pd.DataFrame:
         return MlbStatsClient.fetch_game_boxscore_data(game_pk)
 
+    def fetch_active_players(self, season: int) -> pd.DataFrame:
+        return MlbStatsClient.fetch_active_players(season)
+
     def fetch_player_stats_career(self, player_id: int):
         return MlbStatsClient.fetch_player_stats_career(player_id)
 
