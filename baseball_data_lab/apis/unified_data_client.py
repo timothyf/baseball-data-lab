@@ -87,6 +87,12 @@ class UnifiedDataClient:
     def fetch_team_players(self, team_id: int, season: int):
         return FangraphsClient.fetch_team_players(team_id, season)
 
+    def fetch_batting_leaderboards(self, season: int, as_json: bool = False):
+        return self.fetch_leaderboards(season, "batting", as_json=as_json)
+
+    def fetch_pitching_leaderboards(self, season: int, as_json: bool = False):
+        return self.fetch_leaderboards(season, "pitching", as_json=as_json)
+
     #############################
     # MlbStatsClient wrappers
     #############################
@@ -97,9 +103,9 @@ class UnifiedDataClient:
         return MlbStatsClient.fetch_pitcher_stat_splits(player_id, season)
 
     def fetch_active_roster(
-        self, team_id: int = None, team_name: str = None, year: int = 2024
+        self, team_id: int = None,  year: int = 2024
     ):
-        return MlbStatsClient.fetch_active_roster(team_id, team_name, year)
+        return MlbStatsClient.fetch_active_roster(team_id, year)
 
     def fetch_team(self, team_id: int):
         return MlbStatsClient.fetch_team(team_id)
