@@ -6,41 +6,35 @@ from baseball_data_lab.apis import fangraphs_client
 from baseball_data_lab.apis.fangraphs_client import FangraphsClient
 from baseball_data_lab.config.paths import FANGRAPHS_BASE_URL
 
-class DummyResponse:
-    def __init__(self, data):
-        self._data = data
-    def json(self):
-        return {"data": self._data}
 
-
-def make_fake_get(monkeypatch, expected_url, data):
+def make_fake_get(monkeypatch, expected_url, data, mock_response):
     def fake_get(url):
         assert url == expected_url
-        return DummyResponse(data)
+        return mock_response({"data": data})
     monkeypatch.setattr(requests, "get", fake_get)
 
 
-def test_fetch_player_stats_builds_correct_url(monkeypatch):
+def test_fetch_player_stats_builds_correct_url(monkeypatch, mock_response):
     # Past season uses month=0
     expected_url = (
         f"{FANGRAPHS_BASE_URL}?pos=all&stats=pit&lg=all&qual=0"
         f"&season=2024&startdate=2024-03-01&enddate=2024-11-01"
         f"&month=0&team=12&players=345"
     )
-    make_fake_get(monkeypatch, expected_url, [{"x": 1}])
+    make_fake_get(monkeypatch, expected_url, [{"x": 1}], mock_response)
     df = FangraphsClient.fetch_player_stats(345, 2024, 12, "pitching")
     assert isinstance(df, pd.DataFrame)
     assert df.to_dict("records") == [{"x": 1}]
 
 
-def test_fetch_player_stats_current_season(monkeypatch):
+def test_fetch_player_stats_current_season(monkeypatch, mock_response):
     # Current season uses month=33 and handles batting
     expected_url = (
         f"{FANGRAPHS_BASE_URL}?pos=all&stats=bat&lg=all&qual=0"
         f"&season=2025&startdate=2025-03-01&enddate=2025-11-01"
         f"&month=33&players=999"
     )
-    make_fake_get(monkeypatch, expected_url, [{"y": 2}])
+    make_fake_get(monkeypatch, expected_url, [{"y": 2}], mock_response)
     df = FangraphsClient.fetch_player_stats(999, 2025, None, "batting")
     assert df.to_dict("records") == [{"y": 2}]
 
@@ -65,7 +59,7 @@ def test_fetch_leaderboards_dispatch(monkeypatch):
         FangraphsClient.fetch_leaderboards(2000, "oops")
 
 
-def test_fetch_team_players_merges_names(monkeypatch):
+def test_fetch_team_players_merges_names(monkeypatch, mock_response):
     expected_bat_url = (
         f"{FANGRAPHS_BASE_URL}?age=&pos=all&stats=bat&lg=all&qual=0"
         f"&season=2024&season1=2024&hand=&team=99"
@@ -81,15 +75,15 @@ def test_fetch_team_players_merges_names(monkeypatch):
     def fake_get(url):
         urls.append(url)
         if url == expected_bat_url:
-            return DummyResponse([{"PlayerName": "A"}, {"PlayerName": "B"}])
+            return mock_response({"data": [{"PlayerName": "A"}, {"PlayerName": "B"}]})
         else:
-            return DummyResponse([{"PlayerName": "B"}, {"PlayerName": "C"}])
+            return mock_response({"data": [{"PlayerName": "B"}, {"PlayerName": "C"}]})
     monkeypatch.setattr(requests, "get", fake_get)
     players = FangraphsClient.fetch_team_players(99, 2024)
     assert urls == [expected_bat_url, expected_pitch_url]
     assert players == ["A", "B", "C"]
 
-def test_fetch_leaderboard_helpers(monkeypatch):
+def test_fetch_leaderboard_helpers(monkeypatch, mock_response):
     pitch_url = (
         f"{FANGRAPHS_BASE_URL}?age=&pos=all&stats=pit&lg=all"
         f"&season=2022&season1=2022&ind=0&qual=0&type=8&month=0&pageitems=500000"
@@ -101,7 +95,7 @@ def test_fetch_leaderboard_helpers(monkeypatch):
     urls = []
     def fake_get(url):
         urls.append(url)
-        return DummyResponse([{"PlayerName": "X"}])
+        return mock_response({"data": [{"PlayerName": "X"}]})
     monkeypatch.setattr(requests, "get", fake_get)
     df1 = FangraphsClient.fetch_pitching_leaderboards(2022)
     df2 = FangraphsClient.fetch_batting_leaderboards(2022)

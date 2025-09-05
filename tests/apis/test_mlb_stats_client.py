@@ -1,27 +1,18 @@
 # tests/apis/test_mlb_stats_client.py
 
 import pytest
-import json
 import requests
 import statsapi
-import pandas as pd
-from baseball_data_lab.apis.mlb_stats_client import MlbStatsClient
 
-# A simple fake response class for monkeypatching requests.get
-class FakeResponse:
-    def __init__(self, json_data, status_code=200):
-        self._json_data = json_data
-        self.status_code = status_code
-    def json(self):
-        return self._json_data
+from baseball_data_lab.apis.mlb_stats_client import MlbStatsClient
 
 # ---------------------------
 # Test fetch_player_info
 # ---------------------------
-def test_fetch_player_info(monkeypatch):
+def test_fetch_player_info(monkeypatch, mock_response):
     fake_data = {"people": [{"id": 669373, "name": "Test Player", "currentTeam": {"id": 123}}]}
     def fake_get(url):
-        return FakeResponse(fake_data)
+        return mock_response(fake_data)
     monkeypatch.setattr(requests, "get", fake_get)
     
     result = MlbStatsClient.fetch_player_info(669373)
@@ -31,10 +22,10 @@ def test_fetch_player_info(monkeypatch):
 # ---------------------------
 # Test fetch_team
 # ---------------------------
-def test_fetch_team(monkeypatch):
+def test_fetch_team(monkeypatch, mock_response):
     fake_data = {"teams": [{"id": 116, "name": "Test Team"}]}
     def fake_get(url):
-        return FakeResponse(fake_data)
+        return mock_response(fake_data)
     monkeypatch.setattr(requests, "get", fake_get)
     
     result = MlbStatsClient.fetch_team(116)
@@ -57,7 +48,7 @@ def test_fetch_team(monkeypatch):
 # ---------------------------
 # Test fetch_player_stats_by_season
 # ---------------------------
-def test_fetch_player_stats_by_season(monkeypatch):
+def test_fetch_player_stats_by_season(monkeypatch, mock_response):
     fake_json = {
         "people": [
             {
@@ -80,7 +71,7 @@ def test_fetch_player_stats_by_season(monkeypatch):
         ]
     }
     def fake_requests_get(url):
-        return FakeResponse(fake_json)
+        return mock_response(fake_json)
     monkeypatch.setattr(requests, "get", fake_requests_get)
     
     result = MlbStatsClient.fetch_player_stats_by_season(12345, 2024)
@@ -94,7 +85,7 @@ def test_fetch_player_stats_by_season(monkeypatch):
 # ---------------------------
 # Test fetch_player_team
 # ---------------------------
-def test_fetch_player_team(monkeypatch):
+def test_fetch_player_team(monkeypatch, mock_response):
     fake_data = {
         "people": [
             {
@@ -106,7 +97,7 @@ def test_fetch_player_team(monkeypatch):
     }
 
     def fake_get(url):
-        return FakeResponse(fake_data)
+        return mock_response(fake_data)
 
     monkeypatch.setattr(requests, "get", fake_get)
 
@@ -117,7 +108,7 @@ def test_fetch_player_team(monkeypatch):
 # ---------------------------
 # Test fetch_active_roster
 # ---------------------------
-def test_fetch_active_roster(monkeypatch):
+def test_fetch_active_roster(monkeypatch, mock_response):
     fake_roster = {
         "roster": [
             {"person": {"fullName": "Player A"}},
@@ -126,7 +117,7 @@ def test_fetch_active_roster(monkeypatch):
     }
 
     def fake_get(url):
-        return FakeResponse(fake_roster)
+        return mock_response(fake_roster)
 
     monkeypatch.setattr(requests, "get", fake_get)
 
@@ -137,7 +128,7 @@ def test_fetch_active_roster(monkeypatch):
 # ---------------------------
 # Test fetch_full_season_roster
 # ---------------------------
-def test_fetch_full_season_roster(monkeypatch):
+def test_fetch_full_season_roster(monkeypatch, mock_response):
     fake_roster = {
         "roster": [
             {"person": {"fullName": "Player A"}},
@@ -146,7 +137,7 @@ def test_fetch_full_season_roster(monkeypatch):
     }
     
     def fake_get(url):
-        return FakeResponse(fake_roster)
+        return mock_response(fake_roster)
 
     monkeypatch.setattr(requests, "get", fake_get)
 
