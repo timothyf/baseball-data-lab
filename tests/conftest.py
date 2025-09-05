@@ -2,6 +2,18 @@ import json
 import os
 import pytest
 
+@pytest.fixture
+def mock_response():
+    class MockResponse:
+        def __init__(self, json_data, status_code=200):
+            self._json_data = json_data
+            self.status_code = status_code
+
+        def json(self):
+            return self._json_data
+
+    return MockResponse
+
 
 @pytest.fixture(scope="module")
 def sample_batter_stats():
