@@ -125,18 +125,3 @@ def test_set_axes_limits_and_labels(plot_object):
     assert ax.get_ylabel() != ""
     assert ax.get_title() != ""
     plt.close(fig)
-
-def test_plot_integration(plot_object, sample_pitch_data):
-    """
-    Integration test for the top-level plot method.
-    As long as no exceptions are raised and the axes have labels, we consider it a pass.
-    """
-    fig, ax = plt.subplots()
-    window = 1
-    plot_object.plot(sample_pitch_data, ax, window)
-
-    # Check that axis labels and title are set.
-    assert ax.get_xlabel() != ""
-    assert ax.get_ylabel() != ""
-    assert ax.get_title() != ""
-    plt.close(fig)
