@@ -163,6 +163,9 @@ class UnifiedDataClient:
 
     def fetch_team_spot_url(self, mlbam_team_id: int, size: int) -> str:
         return MlbStatsClient.fetch_team_spot_url(mlbam_team_id, size)
+    
+    def fetch_player_hero_image_url(self, player_id: int) -> str:
+        return MlbStatsClient.fetch_player_hero_image_url(player_id)
 
     def fetch_game_data(self, game_pk: int) -> pd.DataFrame:
         return MlbStatsClient.fetch_game_data(game_pk)

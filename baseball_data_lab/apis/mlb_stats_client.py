@@ -548,6 +548,13 @@ class MlbStatsClient:
     def fetch_team_spot_url(mlbam_team_id: int, size: int) -> str:
         """Return the URL for a specific spot on the team's cap."""
         return f"https://midfield.mlbstatic.com/v1/team/{mlbam_team_id}/spots/{size}"
+    
+    @staticmethod
+    def fetch_player_hero_image_url(player_id: int) -> str:
+        """Return the URL for the player's hero image.
+            https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:action:hero:current.jpg/q_auto:good,w_3000/v1/people/640448/action/hero/current
+        """
+        return f"https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:action:hero:current.jpg/q_auto:good,w_3000/v1/people/{player_id}/action/hero/current"
 
     # https://baseballsavant.mlb.com/gf?game_pk=776673
     @staticmethod
