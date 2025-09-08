@@ -1,0 +1,517 @@
+{
+  "Arizona Diamondbacks": [
+    {
+      "label": "Color 1",
+      "name": "Sedona Red",
+      "hex": "#A71930"
+    },
+    {
+      "label": "Color 2",
+      "name": "Sonoran Sand",
+      "hex": "#E3D4AD"
+    },
+    {
+      "label": "Color 3",
+      "name": "Black",
+      "hex": "#000000"
+    },
+    {
+      "label": "Color 4",
+      "name": "Teal",
+      "hex": "#30CED8"
+    },
+    {
+      "label": "Color 5",
+      "name": "White",
+      "hex": "#FFFFFF"
+    }
+  ],
+  "Atlanta Braves": [
+    {
+      "label": "Color 1",
+      "name": "Scarlet",
+      "hex": "#CE1141"
+    },
+    {
+      "label": "Color 2",
+      "name": "Navy",
+      "hex": "#13274F"
+    },
+    {
+      "label": "Color 3",
+      "name": "Yellow",
+      "hex": "#EAAA00"
+    },
+    {
+      "label": "Color 4",
+      "name": "White",
+      "hex": "#FFFFFF"
+    }
+  ],
+  "Baltimore Orioles": [
+    {
+      "label": "Color 1",
+      "name": "Orange",
+      "hex": "#DF4601"
+    },
+    {
+      "label": "Color 2",
+      "name": "Black",
+      "hex": "#000000"
+    }
+  ],
+  "Boston Red Sox": [
+    {
+      "label": "Color 1",
+      "name": "Red",
+      "hex": "#BD3039"
+    },
+    {
+      "label": "Color 2",
+      "name": "Blue",
+      "hex": "#0C2340"
+    },
+    {
+      "label": "Color 3",
+      "name": "White",
+      "hex": "#FFFFFF"
+    }
+  ],
+  "Chicago Cubs": [
+    {
+      "label": "Color 1",
+      "name": "Blue",
+      "hex": "#0E3386"
+    },
+    {
+      "label": "Color 2",
+      "name": "Red",
+      "hex": "#CC3433"
+    }
+  ],
+  "Chicago White Sox": [
+    {
+      "label": "Color 1",
+      "name": "Black",
+      "hex": "#27251F"
+    },
+    {
+      "label": "Color 2",
+      "name": "Silver",
+      "hex": "#C4CED4"
+    }
+  ],
+  "Cincinnati Reds": [
+    {
+      "label": "Color 1",
+      "name": "Red",
+      "hex": "#C6011F"
+    },
+    {
+      "label": "Color 2",
+      "name": "Black",
+      "hex": "#000000"
+    },
+    {
+      "label": "Color 3",
+      "name": "White",
+      "hex": "#FFFFFF"
+    }
+  ],
+  "Cleveland Guardians": [
+    {
+      "label": "Color 1",
+      "name": "Navy Blue",
+      "hex": "#00385D"
+    },
+    {
+      "label": "Color 2",
+      "name": "Red",
+      "hex": "#E50022"
+    },
+    {
+      "label": "Color 3",
+      "name": "White",
+      "hex": "#FFFFFF"
+    }
+  ],
+  "Colorado Rockies": [
+    {
+      "label": "Color 1",
+      "name": "Rockies Purple",
+      "hex": "#333366"
+    },
+    {
+      "label": "Color 2",
+      "name": "Silver",
+      "hex": "#C4CED4"
+    },
+    {
+      "label": "Color 3",
+      "name": "Midnight Black",
+      "hex": "#000000"
+    }
+  ],
+  "Detroit Tigers": [
+    {
+      "label": "Color 1",
+      "name": "Navy",
+      "hex": "#0C2340"
+    },
+    {
+      "label": "Color 2",
+      "name": "Orange",
+      "hex": "#FA4616"
+    }
+  ],
+  "Houston Astros": [
+    {
+      "label": "Color 1",
+      "name": "Navy",
+      "hex": "#002D62"
+    },
+    {
+      "label": "Color 2",
+      "name": "Orange",
+      "hex": "#EB6E1F"
+    },
+    {
+      "label": "Color 3",
+      "name": "Light Orange",
+      "hex": "#F4911E"
+    }
+  ],
+  "Kansas City Royals": [
+    {
+      "label": "Color 1",
+      "name": "Royal Blue",
+      "hex": "#004687"
+    },
+    {
+      "label": "Color 2",
+      "name": "Gold",
+      "hex": "#BD9B60"
+    }
+  ],
+  "Los Angeles Angels": [
+    {
+      "label": "Color 1",
+      "name": "Midnight Blue",
+      "hex": "#003263"
+    },
+    {
+      "label": "Color 2",
+      "name": "Red",
+      "hex": "#BA0021"
+    },
+    {
+      "label": "Color 3",
+      "name": "Maroon",
+      "hex": "#862633"
+    },
+    {
+      "label": "Color 4",
+      "name": "Silver",
+      "hex": "#C4CED4"
+    },
+    {
+      "label": "Color 5",
+      "name": "White",
+      "hex": "#FFFFFF"
+    }
+  ],
+  "Los Angeles Dodgers": [
+    {
+      "label": "Color 1",
+      "name": "Dodger Blue",
+      "hex": "#005A9C"
+    },
+    {
+      "label": "Color 2",
+      "name": "Red",
+      "hex": "#EF3E42"
+    },
+    {
+      "label": "Color 3",
+      "name": "Silver",
+      "hex": "#A5ACAF"
+    }
+  ],
+  "Miami Marlins": [
+    {
+      "label": "Color 1",
+      "name": "Miami Blue",
+      "hex": "#00A3E0"
+    },
+    {
+      "label": "Color 2",
+      "name": "Caliente Red",
+      "hex": "#EF3340"
+    },
+    {
+      "label": "Color 3",
+      "name": "Slate Gray",
+      "hex": "#41748D"
+    },
+    {
+      "label": "Color 4",
+      "name": "Midnight Black",
+      "hex": "#000000"
+    }
+  ],
+  "Milwaukee Brewers": [
+    {
+      "label": "Color 1",
+      "name": "Yellow",
+      "hex": "#FFC52F"
+    },
+    {
+      "label": "Color 2",
+      "name": "Navy Blue",
+      "hex": "#12284B"
+    }
+  ],
+  "Minnesota Twins": [
+    {
+      "label": "Color 1",
+      "name": "Twins Navy",
+      "hex": "#002B5C"
+    },
+    {
+      "label": "Color 2",
+      "name": "Scarlet Red",
+      "hex": "#D31145"
+    },
+    {
+      "label": "Color 3",
+      "name": "Kasota Gold",
+      "hex": "#B9975B"
+    }
+  ],
+  "New York Mets": [
+    {
+      "label": "Color 1",
+      "name": "Blue",
+      "hex": "#002D72"
+    },
+    {
+      "label": "Color 2",
+      "name": "Orange",
+      "hex": "#FF5910"
+    }
+  ],
+  "New York Yankees": [
+    {
+      "label": "Color 1",
+      "name": "Blue",
+      "hex": "#003087"
+    },
+    {
+      "label": "Color 2",
+      "name": "Red",
+      "hex": "#E4002C"
+    },
+    {
+      "label": "Color 3",
+      "name": "Navy Blue",
+      "hex": "#0C2340"
+    },
+    {
+      "label": "Color 4",
+      "name": "Gray",
+      "hex": "#C4CED3"
+    }
+  ],
+  "Oakland Athletics": [
+    {
+      "label": "Color 1",
+      "name": "Green",
+      "hex": "#003831"
+    },
+    {
+      "label": "Color 2",
+      "name": "Gold",
+      "hex": "#EFB21E"
+    },
+    {
+      "label": "Color 3",
+      "name": "Gray",
+      "hex": "#A2AAAD"
+    }
+  ],
+  "Philadelphia Phillies": [
+    {
+      "label": "Color 1",
+      "name": "Red",
+      "hex": "#E81828"
+    },
+    {
+      "label": "Color 2",
+      "name": "Blue",
+      "hex": "#002D72"
+    },
+    {
+      "label": "Color 3",
+      "name": "White",
+      "hex": "#FFFFFF"
+    }
+  ],
+  "Pittsburgh Pirates": [
+    {
+      "label": "Color 1",
+      "name": "Black",
+      "hex": "#27251F"
+    },
+    {
+      "label": "Color 2",
+      "name": "Yellow",
+      "hex": "#FDB827"
+    }
+  ],
+  "San Diego Padres": [
+    {
+      "label": "Color 1",
+      "name": "San Diego Padres Brown",
+      "hex": "#2F241D"
+    },
+    {
+      "label": "Color 2",
+      "name": "San Diego Padres Gold",
+      "hex": "#FFC425"
+    }
+  ],
+  "San Francisco Giants": [
+    {
+      "label": "Color 1",
+      "name": "Orange",
+      "hex": "#FD5A1E"
+    },
+    {
+      "label": "Color 2",
+      "name": "Black",
+      "hex": "#27251F"
+    },
+    {
+      "label": "Color 3",
+      "name": "Beige",
+      "hex": "#EFD19F"
+    },
+    {
+      "label": "Color 4",
+      "name": "Gold",
+      "hex": "#AE8F6F"
+    }
+  ],
+  "Seattle Mariners": [
+    {
+      "label": "Color 1",
+      "name": "Navy Blue",
+      "hex": "#0C2C56"
+    },
+    {
+      "label": "Color 2",
+      "name": "Northwest Green",
+      "hex": "#005C5C"
+    },
+    {
+      "label": "Color 3",
+      "name": "Silver",
+      "hex": "#C4CED4"
+    },
+    {
+      "label": "Color 4",
+      "name": "Red",
+      "hex": "#D50032"
+    }
+  ],
+  "St. Louis Cardinals": [
+    {
+      "label": "Color 1",
+      "name": "Cardinal Red",
+      "hex": "#C41E3A"
+    },
+    {
+      "label": "Color 2",
+      "name": "Navy",
+      "hex": "#0C2340"
+    },
+    {
+      "label": "Color 3",
+      "name": "Yellow",
+      "hex": "#FEDB00"
+    },
+    {
+      "label": "Color 4",
+      "name": "White",
+      "hex": "#FFFFFF"
+    }
+  ],
+  "Tampa Bay Rays": [
+    {
+      "label": "Color 1",
+      "name": "Navy Blue",
+      "hex": "#092C5C"
+    },
+    {
+      "label": "Color 2",
+      "name": "Columbia Blue",
+      "hex": "#8FBCE6"
+    },
+    {
+      "label": "Color 3",
+      "name": "Yellow",
+      "hex": "#F5D130"
+    },
+    {
+      "label": "Color 4",
+      "name": "White",
+      "hex": "#FFFFFF"
+    }
+  ],
+  "Texas Rangers": [
+    {
+      "label": "Color 1",
+      "name": "Blue",
+      "hex": "#003278"
+    },
+    {
+      "label": "Color 2",
+      "name": "Red",
+      "hex": "#C0111F"
+    }
+  ],
+  "Toronto Blue Jays": [
+    {
+      "label": "Color 1",
+      "name": "Blue",
+      "hex": "#134A8E"
+    },
+    {
+      "label": "Color 2",
+      "name": "Navy Blue",
+      "hex": "#1D2D5C"
+    },
+    {
+      "label": "Color 3",
+      "name": "Red",
+      "hex": "#E8291C"
+    }
+  ],
+  "Washington Nationals": [
+    {
+      "label": "Color 1",
+      "name": "Red",
+      "hex": "#AB0003"
+    },
+    {
+      "label": "Color 2",
+      "name": "Navy Blue",
+      "hex": "#14225A"
+    },
+    {
+      "label": "Color 3",
+      "name": "White",
+      "hex": "#FFFFFF"
+    }
+  ]
+}
