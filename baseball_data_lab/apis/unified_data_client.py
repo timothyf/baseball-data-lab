@@ -184,6 +184,9 @@ class UnifiedDataClient:
 
     def fetch_player_stats_career(self, player_id: int):
         return MlbStatsClient.fetch_player_stats_career(player_id)
+    
+    def fetch_career_stats_for_players(self, player_ids: list[int]):
+        return MlbStatsClient.fetch_career_stats_for_players(player_ids)
 
     def fetch_leaderboard_data(
         self,
