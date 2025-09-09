@@ -393,10 +393,10 @@ class MlbStatsClient:
     def fetch_career_stats_for_players(player_ids: List[int]):
         """Fetch career stats for multiple players.
             Batter example:
-            https://statsapi.mlb.com/api/v1/people?personIds=408234,545361&hydrate=stats(type=[career,careerAdvanced],group=hitting,pitching)
+            https://statsapi.mlb.com/api/v1/people?personIds=408234,545361&hydrate=stats(type=[career,careerAdvanced],group=[hitting,pitching]
         """
         ids = ",".join([str(id) for id in player_ids])
-        url = STATS_API_BASE_URL + f"people?personIds={ids}&hydrate=stats(type=[career,careerAdvanced],group=hitting,pitching)"
+        url = STATS_API_BASE_URL + f"people?personIds={ids}&hydrate=stats(type=[career,careerAdvanced],group=[hitting,pitching])"
         data = MlbStatsClient._get_json(url)
         return data
     
