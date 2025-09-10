@@ -1,5 +1,5 @@
 import pandas as pd
-from typing import Optional
+from typing import List, Optional
 
 from baseball_data_lab.apis.web_client import WebClient
 from baseball_data_lab.apis.mlb_stats_client import MlbStatsClient
@@ -96,11 +96,11 @@ class UnifiedDataClient:
     #############################
     # MlbStatsClient wrappers
     #############################
-    def fetch_batting_splits(self, player_id: int, season: int):
-        return MlbStatsClient.fetch_batter_stat_splits(player_id, season)
+    def fetch_batting_splits(self, player_id: int, season: int, sit_codes: Optional[List[str]] = None):
+        return MlbStatsClient.fetch_batter_stat_splits(player_id, season, sit_codes=sit_codes)
 
-    def fetch_pitching_splits(self, player_id: int, season: int):
-        return MlbStatsClient.fetch_pitcher_stat_splits(player_id, season)
+    def fetch_pitching_splits(self, player_id: int, season: int, sit_codes: Optional[List[str]] = None):
+        return MlbStatsClient.fetch_pitcher_stat_splits(player_id, season, sit_codes=sit_codes)
 
     def fetch_active_roster(
         self, team_id: int = None,  year: int = 2024

@@ -60,7 +60,7 @@ class Player:
             if is_pitcher
             else self.data_client.fetch_batting_splits
         )
-        splits = fetch_splits(self.mlbam_id, season=season)
+        splits = fetch_splits(self.mlbam_id, season=season, sit_codes=['vr', 'vl', 'h', 'a'])
         return stats, splits
 
     def _fetch_statcast(self, start_date: str, end_date: str) -> Any:
