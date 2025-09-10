@@ -18,7 +18,7 @@ class BaseSheet:
     def __init__(self, season: int = 2024, data_client: UnifiedDataClient | None = None):
         self.data_client = data_client if data_client else UnifiedDataClient()
         self.season = season
-        season_info = self.data_client.get_season_info(season)
+        season_info = self.data_client.fetch_season_info(season)
         self.start_date = season_info["regularSeasonStartDate"]
         self.end_date = season_info["regularSeasonEndDate"]
 
