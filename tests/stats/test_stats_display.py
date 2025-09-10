@@ -127,13 +127,11 @@ def test_plot_splits_stats(stats_display, capture_plot, sample_batter_stat_split
         {k: v for k, v in split.get("stat", {}).items() if k in expected_fields}
         for split in sample_batter_stat_splits
     ]
-    expected_df = pd.DataFrame(expected_stats).reset_index(drop=True)
+    expected_df = pd.DataFrame(expected_stats)[expected_fields]
 
-    actual_stats = [
-        {k: v for k, v in split.get("stat", {}).items() if k in expected_fields}
-        for split in call["stats"]
-        if "stat" in split
-    ]
-    actual_df = pd.DataFrame(actual_stats).reset_index(drop=True)
-    pd.testing.assert_frame_equal(actual_df, expected_df, check_like=True)
+    assert isinstance(call["stats"], pd.DataFrame)
+    actual_df = call["stats"][expected_fields].reset_index(drop=True)
+    pd.testing.assert_frame_equal(
+        actual_df, expected_df.reset_index(drop=True), check_like=True
+    )
 

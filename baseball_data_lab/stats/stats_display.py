@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from baseball_data_lab.config.stats import StatsConfig
 from baseball_data_lab.data_viz.stats_table import StatsTable
 from baseball_data_lab.player.player import Player
+from baseball_data_lab.apis.mlb_stats_client import process_splits
 
 
 class StatsDisplay:
@@ -28,8 +29,17 @@ class StatsDisplay:
         if self.player.player_splits_stats is None:
             print("No splits stats data available.")
             return
-        
-        self._plot_stats_table(self.player.player_splits_stats, self.season_stats['splits'], ax, 'Splits', is_splits=True)
+
+        splits_data = self.player.player_splits_stats
+        # The Stats API returns a list of split dictionaries.  ``StatsTable``
+        # expects a ``DataFrame`` when generating a table, so convert the list
+        # to a properly-indexed ``DataFrame`` when necessary.
+        if isinstance(splits_data, list):
+            splits_data = process_splits(splits_data)
+
+        self._plot_stats_table(
+            splits_data, self.season_stats["splits"], ax, "Splits", is_splits=True
+        )
 
 
     # def _plot_stat_data(self, data, stat_type: str, ax: plt.Axes, title: str):
