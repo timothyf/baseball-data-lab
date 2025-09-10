@@ -16,6 +16,26 @@ logger = logging.getLogger(__name__)
 from baseball_data_lab.config.paths import STATS_API_BASE_URL, SAVANT_BASE_URL, MLB_INFRA_BASE_URL
 from datetime import date
 
+# Default situation codes used when fetching stat splits.  These can be
+# overridden by passing a custom list to the public fetch methods below.
+DEFAULT_SIT_CODES = [
+    "vr",
+    "vl",
+    "h",
+    "a",
+    "d",
+    "n",
+    "preas",
+    "posas",
+    "val",
+    "vnl",
+    "r0",
+    "r123",
+    "ron",
+    "ac",
+    "bc",
+]
+
 
 class MlbStatsClient:
     """Thin wrapper around the MLB Stats API."""
@@ -135,31 +155,57 @@ class MlbStatsClient:
         return MlbStatsClient._get_json(url)
 
     @staticmethod
-    def fetch_batter_stat_splits(player_id: int, year: int):
+    def fetch_batter_stat_splits(
+        player_id: int, year: int, sit_codes: Optional[List[str]] = None
+    ):
         """
         Fetch batter stat splits for a player in a specific year.
-       https://statsapi.mlb.com/api/v1/people?personIds=682985&hydrate=stats(group=[hitting],type=statSplits,sitCodes=[d7,d15,d30,vr,vl,h,a],season=2024)
-        
+
+        Parameters
+        ----------
+        player_id: int
+            MLBAM player identifier.
+        year: int
+            Target season.
+        sit_codes: list[str], optional
+            List of situation codes to request.  If ``None`` the
+            ``DEFAULT_SIT_CODES`` are used.
+
         lookup sitCodes here
-          https://statsapi.mlb.com/api/v1/situationCodes         
+          https://statsapi.mlb.com/api/v1/situationCodes
         """
         logger.info("Fetching batter stat splits...")
+        codes = sit_codes if sit_codes is not None else DEFAULT_SIT_CODES
+        code_param = ",".join(codes)
         url = (
             f"{STATS_API_BASE_URL}people?personIds={player_id}"
-            f"&hydrate=stats(group=[hitting],type=statSplits,sitCodes=[vr,vl,h,a,d,n,preas,posas,val,vnl,r0,r123,ron,ac,bc],season={year})"
+            f"&hydrate=stats(group=[hitting],type=statSplits,sitCodes=[{code_param}],season={year})"
         )
         data = MlbStatsClient._get_json(url)
         return data["people"][0]["stats"][0]["splits"]
 
     @staticmethod
-    def fetch_pitcher_stat_splits(player_id: int, year: int):
+    def fetch_pitcher_stat_splits(
+        player_id: int, year: int, sit_codes: Optional[List[str]] = None
+    ):
         """
         Fetch pitcher stat splits for a player in a specific year.
-        https://statsapi.mlb.com/api/v1/people?personIds=669373&hydrate=stats(group=[pitching],type=statSplits,sitCodes=[vr,vl],season=2024)
+
+        Parameters
+        ----------
+        player_id: int
+            MLBAM player identifier.
+        year: int
+            Target season.
+        sit_codes: list[str], optional
+            List of situation codes to request.  If ``None`` the
+            ``DEFAULT_SIT_CODES`` are used.
         """
+        codes = sit_codes if sit_codes is not None else DEFAULT_SIT_CODES
+        code_param = ",".join(codes)
         url = (
             f"{STATS_API_BASE_URL}people?personIds={player_id}"
-            f"&hydrate=stats(group=[pitching],type=statSplits,sitCodes=[vr,vl,h,a,d,n,preas,posas,val,vnl,r0,r123,ron,ac,bc],season={year})"
+            f"&hydrate=stats(group=[pitching],type=statSplits,sitCodes=[{code_param}],season={year})"
         )
         data = MlbStatsClient._get_json(url)
         return data["people"][0]["stats"][0]["splits"]

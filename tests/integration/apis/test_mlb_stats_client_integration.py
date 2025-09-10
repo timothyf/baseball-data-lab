@@ -1,7 +1,7 @@
 # tests/apis/test_mlb_stats_client_integration.py
 
 import pytest
-from baseball_data_lab.apis.mlb_stats_client import MlbStatsClient
+from baseball_data_lab.apis.mlb_stats_client import MlbStatsClient, DEFAULT_SIT_CODES
 import pandas as pd
 
 
@@ -233,7 +233,9 @@ def test_fetch_batter_stat_splits_integration():
     player_id = 682985
     season = 2024
 
-    splits = MlbStatsClient.fetch_batter_stat_splits(player_id, season)
+    splits = MlbStatsClient.fetch_batter_stat_splits(
+        player_id, season, sit_codes=DEFAULT_SIT_CODES
+    )
 
     # Basic assertions.
     assert splits is not None, "Expected non-None stat splits for player stats."
@@ -295,7 +297,9 @@ def test_fetch_pitcher_stat_splits_integration():
     pitcher_id = 669373 # Tarik Skubal
     season = 2024
 
-    splits = MlbStatsClient.fetch_pitcher_stat_splits(pitcher_id, season)
+    splits = MlbStatsClient.fetch_pitcher_stat_splits(
+        pitcher_id, season, sit_codes=DEFAULT_SIT_CODES
+    )
 
     # Basic assertions.
     assert splits is not None, "Expected non-None stat splits for pitcher stats."
