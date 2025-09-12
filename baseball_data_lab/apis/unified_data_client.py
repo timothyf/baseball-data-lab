@@ -1,10 +1,15 @@
 import pandas as pd
 from typing import List, Optional
+import logging
 
 from baseball_data_lab.apis.web_client import WebClient
 from baseball_data_lab.apis.mlb_stats_client import MlbStatsClient
 from baseball_data_lab.apis.pybaseball_client import PybaseballClient
 from baseball_data_lab.apis.fangraphs_client import FangraphsClient
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 from baseball_data_lab.apis.chadwick_register import (
     ChadwickRegister,
     PlayerSearchClient,
@@ -224,9 +229,13 @@ class UnifiedDataClient:
     def fetch_statcast_batter_data(
         self, player_id: int, start_date: str, end_date: str
     ):
-        return PybaseballClient.fetch_statcast_batter_data(
-            player_id, start_date, end_date
-        )
+        try:
+            return PybaseballClient.fetch_statcast_batter_data(
+                player_id, start_date, end_date
+            )
+        except Exception as e:
+            logger.info(f"Error fetching Statcast data for player {player_id}: {e}")
+            return pd.DataFrame()
 
     def fetch_team_batting_stats(
         self, team_abbrev: str, start_year: int, end_year: int
