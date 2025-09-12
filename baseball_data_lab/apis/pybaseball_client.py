@@ -67,20 +67,18 @@ class PybaseballClient:
         return pyb.playerid_reverse_lookup([player_id], key_type='mlbam')
 
     @staticmethod
-    def fetch_statcast_batter_data(player_id: int, start_date: str, end_date: str):
+    def fetch_statcast_batter_data(player_id: int, start_date: str, end_date: str, as_json: bool = True):
         statcast_data = pyb.statcast_batter(start_date, end_date, player_id)  
-        logger.info(f"Fetched {len(statcast_data)} statcast records for player ID {player_id} from {start_date} to {end_date}.")
-        logger.info(statcast_data.head())
-        json_data = statcast_data.to_json(orient='records', indent=4)
-        logger.info(f"Converted statcast data to JSON format.")
-        logger.info(json_data[:500])  # Log the first 500 characters of the JSON data
-        return json_data
+        if as_json:
+            return statcast_data.to_json(orient='records', indent=4)
+        return statcast_data
+
     @staticmethod
-    def fetch_statcast_pitcher_data(pitcher_id: int, start_date: str, end_date: str):
+    def fetch_statcast_pitcher_data(pitcher_id: int, start_date: str, end_date: str, as_json: bool = True):
         statcast_data = pyb.statcast_pitcher(start_date, end_date, pitcher_id)
-        logger.info(f"Fetched {len(statcast_data)} statcast records for pitcher ID {pitcher_id} from {start_date} to {end_date}.")
-        logger.info(statcast_data.head())
-        return statcast_data.to_json(orient='records', indent=4)
+        if as_json:
+            return statcast_data.to_json(orient='records', indent=4)
+        return statcast_data
 
     @staticmethod
     def save_statcast_batter_data(player_id: int, year: int, file_path: str = None):

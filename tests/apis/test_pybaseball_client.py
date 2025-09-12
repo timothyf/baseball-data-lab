@@ -95,12 +95,12 @@ def test_lookup_player_by_id(monkeypatch):
 
 def test_fetch_statcast_batter_data(monkeypatch):
     monkeypatch.setattr("baseball_data_lab.apis.pybaseball_client.pyb.statcast_batter", fake_statcast_batter)
-    result = PybaseballClient.fetch_statcast_batter_data(123, "2020-04-01", "2020-09-30")
+    result = PybaseballClient.fetch_statcast_batter_data(123, "2020-04-01", "2020-09-30", as_json=False)
     assert not result.empty
 
 def test_fetch_statcast_pitcher_data(monkeypatch):
     monkeypatch.setattr("baseball_data_lab.apis.pybaseball_client.pyb.statcast_pitcher", fake_statcast_pitcher)
-    result = PybaseballClient.fetch_statcast_pitcher_data(321, "2020-04-01", "2020-09-30")
+    result = PybaseballClient.fetch_statcast_pitcher_data(321, "2020-04-01", "2020-09-30", as_json=False)
     assert not result.empty
 
 def test_save_statcast_batter_data(monkeypatch, tmp_path, capsys):
