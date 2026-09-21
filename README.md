@@ -1,7 +1,7 @@
 # Baseball Data Lab
 
-**Be sure to check out my latest project, [DiamondIQ](https://github.com/timothyf/diamond-iq).  DiamondIQ has a goal of providing a complete front office baseball info solution.  
-[https://github.com/timothyf/diamond-iq](https://github.com/timothyf/diamond-iq)**
+**Be sure to check out my latest project, [NineLens](https://github.com/timothyf/ninelens).  NineLens has a goal of providing a complete front office baseball info solution.  
+[https://github.com/timothyf/ninelens](https://github.com/timothyf/ninelens)**
 
 `baseball-data-lab` is a Python application and library for creating advanced stat
 summary sheets for MLB players. It supports yearly customizations and provides
